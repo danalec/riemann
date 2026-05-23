@@ -2,7 +2,7 @@
 **Affiliation:** Independent Researcher
 **Email:** danalec@gmail.com
 **ORCID:** [0009-0002-9725-7779](https://orcid.org/0009-0002-9725-7779)
-**DOI:** [10.5281/zenodo.20329983](https://doi.org/10.5281/zenodo.20329983)
+**DOI:** [10.5281/zenodo.20329982](https://doi.org/10.5281/zenodo.20329982)
 **Date:** 22 May 2026
 
 ---
@@ -11,8 +11,8 @@
 
 | File | Link | SHA3-512 |
 |------|------|----------|
-| PDF | [yamaguchi-rh-2026.pdf](./yamaguchi-rh-2026.pdf) | `5c2e12cb21648faaf68df0e276cd5d66b9ac42b92c954022d3a10200686cfa4ba668581a80fe38f3f75e0f46209cb2a4f04360ffa666d9f9f77f9d57cd46b525` |
-| TEX | [yamaguchi-rh-2026.tex](./yamaguchi-rh-2026.tex) | `224297836a3a1620a3347f1d3d1cd13a6589db62d2b79d0bdd25b79c14458b10b08abf3edc80ec09efe85810bb8187823613c4071349c2522ce0bbd5a2a1d9fe` |
+| PDF | [yamaguchi-rh-2026.pdf](./yamaguchi-rh-2026.pdf) | `e6f3c634a2fa9fd762298840b0d181e50a14fa446697c42d4d1aa9e3b4f4288eb12bba52e3c2e70da3831c0671e5d78d8dad5917b7168906f8f5024f90990c01` |
+| TEX | [yamaguchi-rh-2026.tex](./yamaguchi-rh-2026.tex) | `d1f34339f8c39f923a7026ac007bad88afee0fc41005ef5709c99a2e28dc2bccfd7e4fef96200f3ea69826f1c56e48cda43216fd7a2513400c622c4e720825e8` |
 | PDF.sig | [yamaguchi-rh-2026.pdf.sig](./yamaguchi-rh-2026.pdf.sig) | Bitcoin signature |
 | TEX.sig | [yamaguchi-rh-2026.tex.sig](./yamaguchi-rh-2026.tex.sig) | Bitcoin signature |
 | PDF.ots | [yamaguchi-rh-2026.pdf.ots](./yamaguchi-rh-2026.pdf.ots) | Bitcoin timestamp |
@@ -32,14 +32,20 @@
 
 ## Result
 
-The paper constructs the **Gram Jacobi matrix** $J_N$ — a finite-dimensional 
-Hermitian operator whose eigenvalues converge to the imaginary parts of the 
-non-trivial zeros of $\zeta(s)$ — and proves the **Riemann Hypothesis**.
+The paper constructs the **Gram Jacobi matrix** $J_N$ — a finite-dimensional
+Hermitian matrix whose eigenvalues approach the imaginary parts $\gamma_n$ of
+the non-trivial zeros of $\zeta(s)$ — and proves the **Riemann Hypothesis**.
 
 **Proof chain:**
-- Lemma I–IV: Gram Jacobi, correction formula, Sturm oscillation, scattering phase
-- Theorem I–III: Central convergence, spectral shift, spectral determinant
-- RH: Riemann Hypothesis (self-adjoint eigenvalues → real zeros)
+
+- Lemma I: Gram Jacobi construction (self-adjoint, Weyl law density)
+- Lemma II: Correction formula $\delta a_n = -\pi(S(\gamma_n^+) - 0.5)/\theta'(g_{n-1})$
+- Lemma III: Sturm oscillation equivalence
+- Theorem I: Central convergence (two independent proofs: Abel-Fejér-Moore-Osgood; Guinand-Weil explicit formula)
+- Lemma IV: Scattering phase equals Riemann-Siegel theta
+- Theorem II: Spectral shift convergence via Birman-Krein + Guinand-Weil
+- Theorem III: Spectral determinant identity $\det(zI - J_N) \to c \cdot \xi(\frac12 + iz)$
+- RH: Spectral theorem (real eigenvalues) + functional equation → all zeros on $\Re(s) = \frac12$
 
 ---
 
@@ -85,7 +91,7 @@ riemann/
 
 ---
 
-## Source Code (Paper Appendix A)
+## Source Code
 
 | File | Purpose |
 |------|---------|

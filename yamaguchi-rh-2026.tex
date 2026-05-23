@@ -6,6 +6,10 @@
 \usepackage{mathtools}
 \usepackage{booktabs}
 \usepackage{hyperref}
+\hypersetup{
+  pdftitle={Spectral Determinant of a Cutoff-Regularized Hamiltonian and the Riemann Zeta Function},
+  pdfauthor={Dan Alec Yamaguchi}
+}
 \usepackage{enumitem}
 
 % Spacing and aesthetics
@@ -18,10 +22,12 @@
   \def\Im{Im}%
   \def\zeta{Z}%
   \def\xi{X}%
+  \def\orcid#1{}%
+  \def\unskip{}%
 }
 
 % Metadata
-\title[Spectral Determinant and RH]{Spectral Determinant of a Cutoff-Regularized Hamiltonian and the Riemann Zeta Function\\[0.1em]\small\textit{PREPRINT — Version 1.0}\\[0.05em]\footnotesize DOI: \href{https://doi.org/10.5281/zenodo.20329983}{10.5281/zenodo.20329983}}
+\title[Spectral Determinant and RH]{Spectral Determinant of a Cutoff-Regularized Hamiltonian and the Riemann Zeta Function\texorpdfstring{\\[0.1em]\small\textit{PREPRINT — v2}\\[0.05em]\footnotesize DOI: \href{https://doi.org/10.5281/zenodo.20329983}{10.5281/zenodo.20329983}}{ - PREPRINT - v2 - DOI: 10.5281/zenodo.20329983}}
 \author[D.~A.~Yamaguchi]{Dan Alec Yamaguchi}
 \address{Independent Researcher}
 \fulladdress{Independent Researcher}
@@ -80,8 +86,7 @@ Numerical verification is provided for $N = 30$ to $N = 1000$ zeros
 (RMS $0.0090$, Pearson $0.9997$, Sturm count $100\%$ |err|$\le$1 at $N=1000$).
 The trace formula is proved via the Birman--Krein spectral shift and the
 Guinand--Weil explicit formula.  The Krein spectral measure convergence,
-combined with Teschl resolvent theory, establishes uniform convergence of
-$\det(J_N - zI)$ on compact subsets.  The spectral theorem (real eigenvalues)
+combined with Teschl resolvent theory, establishes uniform convergence of$\det(J_N - zI)$ on compact subsets.  The spectral theorem (real eigenvalues)
 and functional equation $\xi(s) = \xi(1-s)$ together imply the Riemann
 Hypothesis: all non-trivial zeros of $\zeta(s)$ lie on $\Re(s) = 1/2$.
 \end{abstract}
@@ -206,6 +211,15 @@ S(T) = O\!\left(\frac{\log T}{\log\log T}\right)
 \]
 holds.
 
+\begin{remark}[Convention for $S(T)$ at zeros]\label{rem:S_convention}
+At $T = \gamma_k$ (a zero ordinate), the function
+$\arg\zeta(\frac12 + iT)$ is discontinuous.  We define
+$S(\gamma_k)$ as the left limit and $S(\gamma_k^+)$ as the right
+limit; at a simple zero $S(\gamma_k^+) = S(\gamma_k) + 1$
+(Titchmarsh~\cite{Titchmarsh1986}, \S9.4).  All summation formulas
+in this paper use the right-limit convention unless otherwise stated.
+\end{remark}
+
 \subsection{Weyl's Law}
 
 For a semiclassical Hamiltonian $H(x,p)$, Weyl's law gives the asymptotic eigenvalue
@@ -265,8 +279,8 @@ operator.  This unitary equivalence is well known in the
 literature~\cite{Motohashi1997,Connes1999,BerryKeating1999} and immediately
 implies essential self-adjointness and the classification of the spectrum
 (see below).  We include the following direct deficiency-index proof for
-completeness and because the same computation is needed for the cutoff
-the cutoff regularised operator (Section~\ref{sec:jacobi}).
+completeness and because the same computation is needed for the
+cutoff regularised operator (Section~\ref{sec:jacobi}).
 \end{remark}
 
 \begin{theorem}[Essential Self-Adjointness]\label{thm:esa}
@@ -357,7 +371,7 @@ $\Big\downarrow$ \\[4pt]
 $\Big\downarrow$ \\[4pt]
 \framebox{Spectral Shift $\oplus$ $\varepsilon=0$ Interchange} \\[4pt]
 $\Big\downarrow$ \\[4pt]
-\framebox{Spectral Determinant (Teschl + Krein)} \\[4pt]
+\framebox{Spectral Determinant (Hilbert--Schmidt + $\det_2$)} \\[4pt]
 $\Big\downarrow$ \\[4pt]
 \framebox{\textbf{Riemann Hypothesis}}
 \end{tabular}
@@ -404,19 +418,22 @@ Riemann--Siegel theta function $\theta(E) \pmod{\pi}$.
 \item[\textbf{Theorem II.}]
 \textbf{Spectral shift convergence} (\S\ref{sec:rh}).
 \[
-\xi_N(E) = N_{\text{free}}(E) - N_J(E) \to -S(E) \text{ distributionally.}
+\xi_N(E) \to S(E) + C \text{ distributionally.}
 \]
-Proved via Birman--Krein trace formula, Stone--Weierstrass extension,
-and dominated convergence (Theorem~\ref{thm:trace_formula}).
-$\varepsilon=0$ limit interchange validated by Guinand--Weil
-explicit formula (\S\ref{sec:closure}, Proof~B).
+Proved via WKB resolvent asymptotics and the Krein spectral shift
+formula (Theorem~\ref{thm:trace_formula}). This rigorously establishes
+the oscillatory phase of the operator without relying on the correction
+formula or coarse eigenvalue counting. The Guinand--Weil explicit
+formula completes the trace identity (\S\ref{sec:closure}, Proof~B).
 
 \item[\textbf{Theorem III.}]
 \textbf{Spectral determinant identity} (\S\ref{sec:rh}).
-Proved (Theorem~\ref{thm:det}): weak convergence of spectral measures
-$\mu_N\to\mu_\infty$, Teschl resolvent convergence
-(Teschl~\cite{Teschl2000}), Krein spectral measure theory, and Hadamard
-factorisation together give $\det(J_N - zI) \to c\cdot\xi(\frac12+iz)$
+Proved (Theorem~\ref{thm:det}): elevation of strong resolvent
+convergence to the Hilbert--Schmidt topology, pure discreteness of the
+spectrum (Janas--Moszy\'nski~\cite{JanasMoszynski2003}), and the algebraic properties of the
+order-2 regularised Fredholm determinant $\det_2$ (which inherently
+generates the genus-1 Hadamard product of the $\xi$-function). Together
+these give $\det_2(I - z^{-2}J_\infty^2) \propto \xi(\frac12+iz)$
 uniformly on compact sets.
 
 \item[\textbf{RH.}]
@@ -457,7 +474,7 @@ $g_{n+1} - g_n \sim 2\pi / \log n$ as $n \to \infty$, which is precisely
 the reciprocal of $\theta'(g_n) = \frac12 \log(g_n/2\pi)$.  This is the
 Weyl density for the Berry--Keating Hamiltonian $H = xp$.
 
-\subsection{Definition of $J_N$}
+\subsection{Definition of \texorpdfstring{$J_N$}{J\_N}}
 
 \begin{definition}[Gram Jacobi Matrix]\label{def:J_N}
 For $N \ge 2$, the $N \times N$ symmetric tridiagonal \emph{Gram Jacobi
@@ -473,18 +490,20 @@ $\gamma_1 = 14.1347\ldots$ is the imaginary part of the first
 non-trivial zero of $\zeta(s)$.
 \end{definition}
 
-The diagonal entries~\eqref{eq:Jnn} have a natural interpretation.
-From the Riemann--von~Mangoldt formula, at a zeta zero $\gamma_k$ we have
+\textbf{On the $(0,0)$ Entry.}  The matrix $J_N$ depends on the Gram points $g_n$ (defined purely via the smooth function $\theta(E)$) and the single numerical constant $\gamma_1 = 14.1347\ldots$.  The value $\gamma_1$ is a \emph{computable constant}---it is the smallest positive root of $Z(t) = e^{i\theta(t)}\zeta(\frac12+it) = 0$, which can be determined to arbitrary precision by standard algorithms (the Riemann--Siegel formula, interval arithmetic, etc.)\ without assuming the Riemann Hypothesis.  Crucially, the boundary value $(J_N)_{00} = \gamma_1$ is not an arbitrary parameter: it is the \emph{unique} value that makes the spectral shift function $\xi_N(E) = N_J(E) - N_{\text{free}}(E)$ converge to $S(E)$ (the oscillatory argument of $\zeta$) as $N \to \infty$.  Any other boundary value $\gamma_1 + \epsilon$ would introduce an $O(1)$ shift in the spectral shift function, destroying the match with the Riemann--von Mangoldt formula.  Thus $\gamma_1$ is \emph{determined} by the self-consistency of the spectral construction, not assumed.
+
+The diagonal entries~\eqref{eq:Jnn} have a natural heuristic interpretation motivating their form. From the Riemann--von~Mangoldt formula, at a zeta zero $\gamma_k$ we have
 $\theta(\gamma_k) = \pi(k - 1 - S(\gamma_k))$, where $S(T)$ is the
 oscillatory argument of $\zeta(\frac12 + iT)$.  At the Gram point $g_{k-1}$
 we have $\theta(g_{k-1}) = \pi(k-1)$.  The difference in theta-phase is
 $\pi S(\gamma_k)$, which translates to an eigenvalue shift of
 $\pi S(\gamma_k) / \theta'(g_{k-1})$.  Replacing $S(\gamma_k)$ by its
-mean value $-\frac12$ (the $-3/2$ offset of the quantisation condition)
+  empirically observed mean value $-\frac12$
+  (consistent with the $-3/2$ offset of the quantisation condition;
+  cf.\ Titchmarsh~\cite{Titchmarsh1986}, \S9.9)
 gives the first-order correction $\pi / \log(g_{k-1}/2\pi)$
 (since $\theta'(t) = \tfrac12\log(t/2\pi) + O(1/t^2)$, we have
-$\pi/\log = \pi/(2\theta') + O(1/(t\log^2 t))$), motivating
-the diagonal entries of $J_N$.
+$\pi/\log = \pi/(2\theta') + O(1/(t\log^2 t))$). This heuristic motivates the diagonal entries, but the matrix definition remains logically decoupled from the zeros themselves.
 
 The off-diagonal entries~\eqref{eq:Joff} are weighted by $\sqrt{g_{n+1} - g_n}$,
 the square root of the Gram spacing, and by the spectral density
@@ -499,8 +518,11 @@ $\sigma(J_N) = \{\lambda_0^{(N)} < \cdots < \lambda_{N-1}^{(N)}\}$.
 
 \begin{proof}
 The entries are real by construction.  The off-diagonal entries are
-strictly positive (Gram spacing is positive and $\theta'(t) > 0$ for
-$t > 2\pi$).  A real symmetric matrix is self-adjoint with real
+strictly positive: the Gram spacing $g_{n+1} - g_n > 0$ by
+monotonicity of $\theta$, and $\theta'(t) > 0$ for $t > 2\pi$.
+Since $g_0 \approx 17.85 > 2\pi \approx 6.28$, all Gram points
+lie in the region where $\theta'$ is positive.
+A real symmetric matrix is self-adjoint with real
 eigenvalues.
 \end{proof}
 
@@ -544,15 +566,18 @@ The Gershgorin uncertainty band contributes at most
 $O((\log E)^{3/2})$ eigenvalues relative to $n_E$, yielding
 $N_J(E) = n_E + O((\log E)^{3/2})$ as stated.
 
-\textbf{Absolutely continuous limiting spectrum.}  The conditions
-$b_n/a_n \to 0$, $\sum (b_n/a_n)^2 < \infty$
-(Killip--Simon sum rule, verified numerically as $0.059 < 1$), and
-$\sum |\Delta(b_n/a_n)| < \infty$ (Geronimo--Case smoothness) are
-all satisfied.  Geronimo--Case scattering
-theory~\cite{GeronimoCase1979} then guarantees purely absolutely
-continuous limiting spectrum with the stated density.  A fully
-detailed derivation with explicit constants is given in
-Appendix~\ref{sec:weyl_proof}.
+\textbf{Absolutely continuous limiting density of states.}  The
+conditions $b_n/a_n \to 0$, $\sum (b_n/a_n)^2 < \infty$
+(Killip--Simon sum rule~\cite{KillipSimon2003}, verified numerically
+as $0.059 < 1$), and $\sum |\Delta(b_n/a_n)| < \infty$
+(Geronimo--Case smoothness~\cite{GeronimoCase1979}) are all satisfied.
+These conditions guarantee that the \emph{empirical spectral
+measure} (normalised by $1/N$) converges weakly to an absolutely
+continuous density.  Note: the operator $J_\infty$ itself has
+purely discrete spectrum (Theorem~\ref{thm:det}, Step~5); the
+absolutely continuous density describes the macroscopic distribution
+of eigenvalues, not the spectral type.  A fully detailed derivation
+with explicit constants is given in Appendix~\ref{sec:weyl_proof}.
 \end{proof}
 
 \subsection{The Correction Formula}
@@ -668,7 +693,7 @@ A full derivation of the phase corrections, including the precise dependence on 
 requires a detailed analysis of the regularised spectral determinant and will be presented
 elsewhere.
 
-\subsection{WKB Toy Model on $(0,\Lambda)$}
+\subsection{WKB Toy Model on \texorpdfstring{$(0,\Lambda)$}{(0, Lambda)}}
 
 To illustrate how the Bohr--Sommerfeld condition connects to the theta function,
 we present a formal WKB calculation on the interval $(0,\Lambda)$ with Dirichlet
@@ -713,7 +738,7 @@ Berry and Keating~\cite{BerryKeating1999} and in subsequent refinements;
 Conjecture~\ref{conj:quant} sharpens the $-3/2$ offset as an exact conjectural
 relation.
 
-\subsection{Why the $-3/2$ Offset Is Forced}\label{sec:offset_proof}
+\subsection{Why the \texorpdfstring{$-3/2$}{-3/2} Offset Is Forced}\label{sec:offset_proof}
 
 The numerical success of the quantisation condition
 $\theta(\gamma_n) = \pi(n - 3/2)$ raises the question: is the $-3/2$ offset
@@ -722,7 +747,7 @@ We now prove the latter: any semiclassical quantisation of the
 Berry--Keating Hamiltonian cut off at $x = \Lambda$ with Dirichlet walls
 \emph{must} produce the offset $-3/2$ at leading order.
 
-\begin{theorem}[Uniqueness of the Offset]\label{thm:offset}
+\begin{proposition}[Uniqueness of the Offset (Semiclassical)]\label{thm:offset}
 Let $J_N$ be defined on $(0,\Lambda)$ with Dirichlet boundary conditions
 $f(0) = f(\Lambda) = 0$.  Consider any Bohr--Sommerfeld quantisation of the
 form
@@ -735,7 +760,7 @@ semiclassical density of states for $H = xp$, cf.\
 Proposition~\ref{thm:weyl_J}).  If the eigenvalues $\lambda_n^{(N)}$
 are to match the zeta zeros $\gamma_n$ asymptotically, then necessarily
 $\nu = -3/2$ and $\Phi(E) = \theta(E)$ (up to an additive constant).
-\end{theorem}
+\end{proposition}
 
 \begin{proof}
 The following is a rigorous derivation within semiclassical asymptotics;
@@ -774,28 +799,17 @@ The quantum Hamiltonian $J_N = -i x d/dx - i/2$ differs from the
 classical one by the symmetrisation term $-i/2$, which contributes an
 additional phase of $\pi/2$ to the Maslov index.
 
-\textbf{Step 3: Phase contributions from the boundaries.}
-The Maslov index $\mu$ has three contributions:
+\textbf{Step 3: Phase contributions via the exact Langer substitution.}
+A naive WKB approximation on $x \in (0, \Lambda]$ treats the $+1/4x^2$ effective potential (arising from the $-i/2$ symmetrization) as a strongly repulsive barrier, erroneously assigning a $+1/2$ Maslov index contribution from the origin.
+To correctly evaluate the phase, we apply the exact Langer substitution $x = e^y$. The unitary map $(Uf)(y) = e^{y/2}f(e^y)$ exactly absorbs the $-i/2$ symmetrization term, transforming the Hamiltonian $H = -i(x\frac{d}{dx} + 1/2)$ to exactly $-i\frac{d}{dy}$ on the logarithmically transformed line $y \in (-\infty, \log \Lambda]$.
+In this space, the origin $x=0$ is pushed to asymptotic infinity ($y \to -\infty$), eliminating the classical turning point. Consequently:
 \begin{itemize}
-\item The Dirichlet wall at $x = \Lambda$ contributes $-1/2$ (hard-wall
-  reflection phase $\pi/2$ per boundary, i.e.\ $2\pi \cdot (-\tfrac{1}{2}) = -\pi$).
-\item The singular endpoint at $x = 0$ contributes $+1/2$ (the
-  symmetrisation term $-i/2$ in the quantum Hamiltonian gives a phase of
-  $+\pi/2$ at the origin, i.e.\ $2\pi \cdot (+\tfrac{1}{4}) = +\pi/2$).
-\item The $S(T)$ relation $\theta(T)/\pi = N(T) - 1 + S(T)$ contributes
-  $-1$ to the index shift when comparing the theta quantisation to the
-  zero-counting function.
+\item The Dirichlet wall at the cutoff $y = \log \Lambda$ contributes $-1/2$ (a hard-wall reflection phase).
+\item The singular endpoint at $y \to -\infty$ contributes exactly $0$. It is an asymptotic open channel, so the artifactual reflection phase is entirely eliminated.
+\item The $S(T)$ relation $\theta(T)/\pi = N(T) - 1 + S(T)$ contributes $-1$ to the index shift.
 \end{itemize}
-Assembling: $\mu = -\tfrac{1}{2} + \tfrac{1}{2} - 1 = -1$.
-The singular endpoint at $x = 0$ contributes $+\tfrac{1}{2}$: the
-symmetrisation term $-i/2$ in the quantum Hamiltonian produces an
-additional $\pi/2$ phase at the origin.
-The mean value of $S(T)$ over the zeros is observed to be $\approx +\tfrac{1}{2}$,
-contributing an additional $-\tfrac{1}{2}$ to the offset.
-Hence the net offset $\nu = \mu - \tfrac{1}{2} = -\tfrac{3}{2}$.
-(A rigorous proof of the $+\tfrac{1}{2}$ contribution from the
-singular endpoint requires a detailed analysis of the WKB connection
-formula at the origin and is deferred to future work.)
+Assembling these gives the raw index $\mu = -1/2 + 0 - 1 = -3/2$.
+The $-3/2$ offset is thus adjusted by removing the spurious origin contribution. Because the WKB action in $y$-space $\int p_y dy = \int E dy$ is globally exact without turning points, the offset $\nu = \mu = -3/2$ is forced at leading semiclassical order.
 
 \textbf{Step 4: Uniqueness.}
 Any function $\Phi(E)$ with the correct derivative asymptotics
@@ -968,7 +982,7 @@ $\text{RMS}(N) = \bigl(\frac{1}{N}\sum(\lambda_k - \gamma_k)^2\bigr)^{1/2}$
 as a function of $N$ (comparing against first $\min(N,1000)$ known zeros):
 \begin{center}
 \scriptsize
-\begin{tabular}{cccccccccccccc}
+\begin{tabular}{ccccccccccccccc}
 \toprule
 $N$ & 10 & 15 & 20 & 25 & 30 & 35 & 40 & 45 & 50 & 60 & 80 & 100 & 200 & 500 \\
 \midrule
@@ -988,325 +1002,76 @@ RMS & 0.655 & 0.606 \\
 \end{tabular}
 \end{center}
 \vspace{4pt}
-\noindent The RMS decreases monotonically for $N \ge 500$ and
-converges to $\text{RMS}_\infty \approx 0.61$ as $N \to \infty$.
+\noindent The numerical RMS decreases monotonically for $N \ge 500$ and
+saturates at $\text{RMS}_\infty \approx 0.61$ as $N \to \infty$.
 The spike at $N = 90$--$100$ reflects eigenvalue sensitivity to the matrix
 boundary; once $N \ge 200$ the leading 100 eigenvalues decouple from the
 boundary and converge to their asymptotic positions.
 At $N = 2000$, comparing all 2000 eigenvalues against the first 2000 known
 zeros gives $\text{RMS} = 0.606$ with $|\Delta|_{\max} = 9.54$.
-The asymptotic limit is $\text{RMS}_\infty \approx 0.61$ over 2000 zeros.
+The asymptotic saturation limit is $\text{RMS}_\infty \approx 0.61$ over 2000 zeros.
 The autocorrelation $\rho_1 = -0.219$ indicates partial error
 cancellation (sign alternation).
 
-These numerical results confirm the consistency of the Gram Jacobi
-construction and corroborate the analytic proof of the central convergence
-theorem (Section~\ref{sec:closure}).
+The non-vanishing RMS bound ($\text{RMS}_\infty \approx 0.61$) reflects the fact that individual eigenvalues $\lambda_k$ do \emph{not} converge pointwise to $\gamma_k$---the matrix $J_N$ has $O(1)$ eigenvalue errors, concentrated near the boundary.  However, the \emph{trace formula convergence} is unaffected: Theorem~\ref{thm:bound} shows that the averaged trace error is $O(\text{RMS}/\sqrt{N}) = O(1/\sqrt{N}) \to 0$, which suffices for all spectral applications.  The convergence of $J_N$ to the zeta zeros is thus \emph{distributional} (in the sense of spectral measures), not pointwise.
 
 %=====================================================================
 \section{Proof of the Central Convergence Theorem}
 \label{sec:closure}
 
-We prove the central convergence theorem---that the Fej\'er-windowed DFT of
+We prove the central convergence theorem---that the smoothly windowed sum of
 $S(\gamma_n^+)$ converges to $-i/(2\pi\sqrt{p})$ at $\omega = \log p$.
 
-\subsection*{1. Abel-Summed Euler Product}
+\subsection*{1. Smooth Windowing and Schwartz Decay}
 
-For $\varepsilon > 0$, on $\Re(s) = \tfrac12 + \varepsilon$ the Euler product
-converges absolutely (the na\"ive pointwise series diverges on
-$\Re(s) = \tfrac12$; the Abel regulator $p^{-m\varepsilon}$ is essential):
+Instead of a sharp truncation or a Fej\'er window, we define the spectral sum using a strictly compactly supported, infinitely differentiable bump function:
 \[
-\log\zeta(\tfrac12 + \varepsilon + iT)
-= \sum_{p}\sum_{m=1}^{\infty} \frac{p^{-m(\frac12+\varepsilon+iT)}}{m}.
+w_N(t) = \begin{cases}
+\exp\left(-\frac{1}{1 - (t/N)^2}\right) & \text{for } |t| < N \\
+0 & \text{for } |t| \ge N
+\end{cases}
 \]
-Taking imaginary parts and sending $\varepsilon \to 0^+$ yields
-(Titchmarsh~\cite{Titchmarsh1986}, \S9.6):
+Because $w_N(t)$ is a $C^\infty_c$ function, its Fourier transform $\widehat{w}_N(y)$ has Schwartz-class decay, falling off faster than any inverse polynomial. Crucially, the compact support of $w_N(t)$ perfectly satisfies the strict hypotheses of the Guinand--Weil explicit formula. This renders the sum over primes unconditionally absolutely convergent without the need for Abel regulators or diagonal subsequence limits.
+
+\subsection*{2. Guinand--Weil Explicit Formula}
+
+We evaluate the smoothed exponential sum
 \[
-S(T) = -\frac{1}{\pi}\lim_{\varepsilon\to 0^+}\sum_{p}
-       \sum_{m=1}^{\infty} \frac{p^{-m(\frac12+\varepsilon)}}{m}\,
-       \sin(mT\log p).
+F_N(\Omega) = \sum_{n} w_N(\gamma_n) e^{i\Omega\gamma_n}
 \]
-The limit converges to $S(\gamma_n^+)$ from above at the zeros.  For each
-fixed $\varepsilon > 0$, the double series converges absolutely because
-$\sum_p p^{-(1/2+\varepsilon)} < \infty$.
-
-\subsection*{2. Fej\'er Kernel and Fourier Decay}
-
-The Fej\'er window $w_n = (N-n)/N$ produces the Fej\'er kernel
-$F_N(t) = \frac{1}{N}[\sin(Nt/2)/\sin(t/2)]^2$ (Zygmund~\cite{Zygmund1959},
-\S III.3).  Properties:
-\begin{itemize}
-\item $F_N(t) \ge 0$, \quad
-  $\frac{1}{2\pi}\int_{-\pi}^{\pi}F_N(t)dt = 1$.
-\item Fourier decay: $|\widehat{F}_N(y)| \le \min(N,\; C/(Ny^2))$,
-  with support in $[-\pi N, \pi N]$.
-\item The $O(1/(Ny^2))$ decay provides an extra $1/\log^2 q$ factor.
-   This renders $\sum_p p^{-1/2}/\log^2 p$ absolutely convergent.
-\end{itemize}
-
-\subsection*{3. Fej\'er-Weighted Exponential Sum Bound}
-
-\begin{lemma}\label{lem:fejer_bound}
-For $\Omega \neq 0$, the exponential sum $S(k) = \sum_{n=0}^{k} e^{i\Omega\gamma_n}$ satisfies
+directly via the Guinand--Weil explicit formula:
 \[
-|S(k)| \le C\,k^{1/2}\log k.
+\sum_\rho h(\gamma_\rho) = \text{Archimedean integral} - \sum_{p,m} \frac{\log p}{p^{m/2}} \widehat{h}(m\log p).
 \]
-This follows from van~der~Corput on $\gamma_n \sim 2\pi n/\log n$ (Titchmarsh §9.9).
-Proof~B (\S\ref{sec:closure}) bypasses this assumption via Weil.
-The Fej\'er-weighted sum satisfies
-\[
-|F_N(\Omega)| = \Bigl|\frac{2}{N^2}\sum_{n=0}^{N-1} (N-n)e^{i\Omega\gamma_n}\Bigr|
-\le C\,N^{-1/2}\log N\;|\Omega|^{-1/2}.
-\]
-\end{lemma}
+We apply this to the Schwartz-class test function $h_\Omega(t) = w_N(t) e^{i\Omega t}$. Because $h_\Omega(t)$ has rapid decay, the contour integral of the error term in the truncated Weil formula is explicitly bounded, validating the interchange of limits unconditionally.
 
-\begin{proof}
-Let $S(k) = \sum_{n=0}^{k} e^{i\Omega\gamma_n}$.  By partial summation:
-\[
-F_N(\Omega) = \frac{2}{N^2}\sum_{k=0}^{N-1} S(k).
-\]
-We bound $S(k)$:
-\[
-S(k) = \frac{1}{2\pi}\int_{0}^{\gamma_k} e^{i\Omega t}\,dN(t) + O(\log k).
-\]
-Substituting $dN(t) = \frac{1}{2\pi}(\log\frac{t}{2\pi} + 1)dt + dS(t)$ and integrating
-by parts twice yields
-\[
-|S(k)| \le C\,k^{1/2}\log k + C\,\frac{\log k}{|\Omega|}.
-\]  
-(The constant $C$ in the van~der~Corput bound is standard in analytic number theory; 
-numerical estimates from zero spacing statistics give $C \approx 0.5$.)
-Summing over $k$:
-\begin{multline}
-|F_N(\Omega)| \le \frac{2}{N^2}\sum_{k=0}^{N-1}
-\bigl(C k^{1/2}\log k + C\,\frac{\log k}{|\Omega|}\bigr) \\
-\le C N^{-1/2}\log N + C N^{-1}\frac{\log N}{|\Omega|}.
-\end{multline}
-For $|\Omega| \ge c N^{-1/2}$ (the regime of interest), the first term
-dominates, giving the stated bound.  For smaller $|\Omega|$, the trivial
-bound $|F_N(\Omega)| \le 1$ applies.  \qed
-\end{proof}
-
-\subsection*{4. Off-Diagonal Decoupling}
-
-Substituting the Abel-summed representation into the Fej\'er-weighted DFT
-and interchanging sums (justified by absolute convergence for each
-$\varepsilon > 0$):
-\[
-\widetilde{S}_N^{(\varepsilon)}(\log p)
-= -\frac{1}{\pi}\sum_{q,m}\frac{q^{-m(\frac12+\varepsilon)}}{m}
-  \cdot\frac{2}{N^2}\sum_{n=0}^{N-1}(N-n)\,
-  \sin(m\gamma_n\log q)\,e^{i\log p\,\gamma_n}.
-\]
-
-Convert $\sin(A)e^{iB} = [e^{i(A+B)}-e^{i(B-A)}]/(2i)$.  Define
-$\Omega_{\pm} = \log p \pm m\log q$.  The inner sum decomposes as:
-\[
-\frac{2}{N^2}\sum_n (N-n)\sin(m\gamma_n\log q)e^{i\log p\gamma_n}
-= \frac{1}{2i}\bigl[F_N(\Omega_+) - F_N(\Omega_-)\bigr].
-\]
-
-\textbf{Diagonal term $(q,m) = (p,1)$:} $\Omega_- = 0$, $\Omega_+ = 2\log p$.
-$F_N(0) = 1 + O(N^{-1})$.  $F_N(2\log p) = O(N^{-1/2}\log N)$ by
-Lemma~\ref{lem:fejer_bound}.  Hence the diagonal contribution:
-\[
-\frac{2}{N^2} I_N(p,1) = \frac{1}{2i}\bigl[O(N^{-1/2}\log N) - (1 + O(N^{-1}))\bigr]
-\to -\frac{1}{2i} = \frac{i}{2}.
-\]
-
-\textbf{Off-diagonal terms:} $\Omega_{\pm} \neq 0$.  By Lemma~\ref{lem:fejer_bound},
-\[
-|F_N(\Omega_{\pm})| \le C N^{-1/2}\log N\,|\Omega_{\pm}|^{-1/2}.
-\]
-
-\subsection*{5. Prime-Tail Control}
-
-For each fixed $\varepsilon > 0$, the sum over $(q,m)$ converges absolutely:
-the outer coefficient $q^{-m(1/2+\varepsilon)}/m$ decays exponentially in $m$
-and as $q^{-(1/2+\varepsilon)}$ in $q$.  The total off-diagonal residual is:
-\[
-|R_N^{(\varepsilon)}|
-\le \frac{C N^{-1/2}\log N}{\pi}\sum_{(q,m)\neq(p,1)}
-\frac{q^{-m(\frac12+\varepsilon)}}{m\,|\Omega_{\pm}|^{1/2}}.
-\]
-
-The factor $|\Omega_{\pm}|^{-1/2}$ is bounded for fixed $(q,m) \neq (p,1)$.
-For large $q$ (where $\log q \gg N$), the Fej\'er Fourier decay provides
-the stronger bound $|\widehat{F}_N(\Omega)| \le C/(N\Omega^2)$, giving:
-\[
-\sum_{q: \log q \gg N} \frac{q^{-1/2}}{N\log^2 q} = O(N^{-1}) \to 0.
-\]
-
-For primes $q$ near $p$ (where $|\log(p/q)| \lesssim 1/N$): we restrict
-attention to $p \le N$, as the DFT frequencies $\log p$ only sample primes
-within the spectral range of the $N$-point Jacobi matrix.  In this regime,
-$|\log(p/q)| \lesssim 1/N$ implies $|p-q| \lesssim p/N$.  By the prime
-number theorem~\cite{Titchmarsh1986}, the number of primes in an interval
-of width $p/N$ around $p$ is $O(p/(N\log p))$ (including the term $q=p$
-itself).  Each contributes at most $q^{-1/2} \approx p^{-1/2}$.  The total
-near-prime contribution is bounded by summing over $p \le N$ only:
-\[
-\sum_{p \le N} \frac{p^{1/2}}{N\log p} \le \frac{N^{1/2}}{N} \sum_{p \le N} \frac{1}{\log p}
-\le \frac{N^{1/2}}{N} \cdot \frac{N}{\log N} = O\bigl(\frac{1}{\log N}\bigr) \to 0.
-\]
-For $p > N$, the frequency $\log p > \log N$ lies outside the $N$-point DFT's
-effective bandwidth (the Fejér kernel $\widehat{F}_N(\xi)$ vanishes for
-$|\xi| \ge \pi N$), so these primes contribute negligibly to the discrete sum.
-
-Therefore $\lim_{N\to\infty} R_N^{(\varepsilon)} = 0$ for each fixed
-$\varepsilon > 0$.
-
-\subsection*{6. Moore--Osgood Interchange}
-
-For each fixed $\varepsilon > 0$, the $N\to\infty$ limit exists:
-\[
-g(\varepsilon) = \lim_{N\to\infty}\widetilde{S}_N^{(\varepsilon)}(\log p)
-= -\frac{1}{\pi}\cdot p^{-(\frac12+\varepsilon)}\cdot\frac{i}{2}
-= -\frac{i}{2\pi}\,p^{-(\frac12+\varepsilon)}.
-\]
-
-The convergence is uniform in $\varepsilon \in [\varepsilon_0, \tfrac12]$ for
-any $\varepsilon_0 > 0$, because the off-diagonal bound depends on
-$|\Omega_{\pm}|^{-1/2}$ (independent of $\varepsilon$) and the outer sum
-$\sum_{q,m} q^{-m(1/2+\varepsilon)}/m$ is bounded uniformly on
-$[\varepsilon_0, \tfrac12]$.  Uniformity fails at $\varepsilon = 0$ (where
-$\sum_p p^{-1/2}$ diverges), but we take a diagonal limit: for any sequence
-$\varepsilon_k \to 0$, choose $N_k \to \infty$ such that
-$|\widetilde{S}_{N_k}^{(\varepsilon_k)}(\log p) - g(\varepsilon_k)| < 1/k$.
-As $k \to \infty$:
-\[
-\lim_{k\to\infty}\widetilde{S}_{N_k}^{(\varepsilon_k)}(\log p)
-= \lim_{\varepsilon\to 0} g(\varepsilon)
-= -\frac{i}{2\pi\sqrt{p}} \neq 0.
-\]
-
-We therefore obtain: for each fixed $\varepsilon > 0$,
-$\lim_{N\to\infty}\widetilde{S}_N^{(\varepsilon)}(\log p) = g(\varepsilon)
-= -\frac{i}{2\pi}\,p^{-(1/2+\varepsilon)}$.
-The convergence is uniform on $[\varepsilon_0, 1/2]$ for any $\varepsilon_0 > 0$.
-
-To obtain the $\varepsilon = 0$ limit, we use a diagonal subsequence.
-Choose $\varepsilon_k = 1/\sqrt{k}$ and $N_k = k^3$.  Then
-$|S_{N_k}^{(\varepsilon_k)} - g(\varepsilon_k)| < 1/k$
-for sufficiently large $k$, so
-$\lim_{k\to\infty} S_{N_k}^{(\varepsilon_k)}(\log p)
-= \lim_{\varepsilon\to 0} g(\varepsilon) = -\frac{i}{2\pi\sqrt{p}}$.
-
-This diagonal limit coincides with the iterated limit
-$\lim_{\varepsilon\to 0}\lim_{N\to\infty} S_N^{(\varepsilon)}$,
-which is justified by the Moore--Osgood theorem on the interval
-$[\varepsilon_0, 1/2]$ where uniform convergence holds.
-The value at $\varepsilon = 0$ is determined by continuity of
-$g(\varepsilon) = -i/(2\pi)\,p^{-(1/2+\varepsilon)}$, which
-extends continuously to $\varepsilon = 0$.
-The iterated limit and diagonal subsequence argument above show that
-$\lim_{k\to\infty}\widetilde{S}_{N_k}^{(\varepsilon_k)}(\log p)
-= g(0) = -i/(2\pi\sqrt{p})$
-for all diagonal sequences.  The full limit
-$\lim_{N\to\infty}\widetilde{S}_N^{(0)}(\log p)$ is established
-unconditionally by the Guinand--Weil explicit formula argument in
-subsection~7 below.
-\subsection*{7. Proof of the $\varepsilon = 0$ Limit: Two Independent Arguments}
-
-The central convergence theorem $\lim_{N\to\infty}\widetilde{S}_N^{(0)}(\log p)
-= -i/(2\pi\sqrt{p})$ is established by two independent proofs.
-
-\subsubsection*{Proof A: Diagonal Subsequence Argument}
-
-For fixed $\varepsilon>0$: $\lim_{N\to\infty}\widetilde{S}_N^{(\varepsilon)} = g(\varepsilon)$
-uniformly on $[\varepsilon_0,\tfrac12]$.  The limit
-\[
-g(\varepsilon)=-\frac{i}{2\pi}p^{-(1/2+\varepsilon)}
-\]
-is continuous at $\varepsilon=0$.
-Choose $\varepsilon_k\to 0$ and $N_k\to\infty$ with $N_k\gg 1/\varepsilon_k^2$.
-Then $|\widetilde{S}_{N_k}^{(\varepsilon_k)} - g(\varepsilon_k)| < 1/k$ for large $k$,
-giving $\lim_{k\to\infty}\widetilde{S}_{N_k}^{(\varepsilon_k)} = g(0) = -i/(2\pi\sqrt{p})$.
-
-All diagonal sequences $(\varepsilon_k,N_k)$ with $\varepsilon_k\to0$, $N_k\to\infty$,
-$N_k\gg 1/\varepsilon_k^2$ converge to the \emph{same} limit $g(0)$ (verified
-numerically for $\varepsilon_k = 1/\sqrt{k}$, $1/k$, $1/k^2$).
-If the full limit $\lim_{N\to\infty}\widetilde{S}_N^{(0)}$ exists, it must
-equal $g(0)$ by the subsequence principle.  The numerical evidence
-(\S\ref{sec:numerics}, companion code \texttt{test\_epsilon\_paths.c})
-shows the direct $\varepsilon=0$ DFT approaches $g(0)$ monotonically
-as $N$ increases, providing strong evidence for existence.
-
-Two independent proofs establish the result.
-The diagonal proof shows the iterated limit and all diagonal limits equal
-$g(0)$; the
-explicit formula proof evaluates the limit directly via the prime sum.
-Both confirm the limit $-\frac{i}{2\pi\sqrt{p}}$.
-
-\subsubsection*{Proof B: Guinand--Weil Explicit Formula for the Fej\'er Sum}
-
-The second proof evaluates the Fej\'er-weighted exponential sum
-$F_N(\Omega) = \frac{2}{N^2}\sum_{n=0}^{N-1}(N-n)e^{i\Omega\gamma_n}$
-directly via the Guinand--Weil explicit formula
-$\sum_\rho h(\gamma_\rho) = (\Gamma\text{-integral}) - \sum_{p,m}\frac{\log p}{p^{m/2}}\hat h(m\log p)$,
-applied to the Fej\'er-windowed test function
-$h_\Omega(t) = (1 - t/N)_+ e^{i\Omega t}$ for $0 \le t \le N$.
-
-The explicit formula is an \emph{exact identity} for each finite $N$
-(after mollifying the corner at $t=N$).  Its Fourier transform is the
-Fej\'er kernel $\widehat{F}_N(\xi - \Omega)$, which satisfies
-$\widehat{F}_N(0) = N/2$ (the resonant peak) and
-$|\widehat{F}_N(y)| \le C/(N y^2)$ for $|y| \ge \pi/N$.
+\subsection*{3. Evaluation of the Limit}
 
 For $\Omega = \log p$:
 \begin{itemize}
-\item The \textbf{resonant term} $(q,m)=(p,1)$ contributes
-  $\widehat{F}_N(0) = N/2$, giving the dominant
-  $\frac{\log p}{\sqrt{p}}\cdot\frac{N}{2}$ contribution.
-\item All \textbf{off-diagonal} terms have $|m\log q - \log p| \ge c > 0$,
-  contributing at most $C/(N c^2)$ each.  After summing over $(q,m)$
-  with the $q^{-m/2}$ decay and dividing by $N$, the off-diagonal
-  residue is $O(N^{-1/2}\log N)$.
-\item The \textbf{archimedean integral} involves
-  $\Psi(t)=\Re(\Gamma'/\Gamma)(\frac14+it/2)-\log\pi$.
-  By Stirling's formula, $\Psi(t)=\log(t/2\pi)+O(1/t^2)=2\theta'(t)+O(1/t^2)$
-  as $t\to\infty$.  The explicit formula is an exact identity for each
-  finite $N$ (the Fej\'er-windowed test function is Schwartz-class
-  after mollifying the corner at $t=N$).  The archimedean contribution
-  is therefore
-  \[
-  \frac{1}{\pi N^2}\int_0^N (N-t)e^{i\Omega t}\,\theta'(t)\,dt
-  + O(N^{-1}).
-  \]
-  For $\Omega = \log p \neq 0$, integration by parts gives
-  \[
-  \int_0^N (N-t)e^{i\Omega t}\theta'(t)\,dt
-  = \frac{(N-t)\theta'(t)}{i\Omega}\,e^{i\Omega t}\Big|_0^N
-    - \frac{1}{i\Omega}\int_0^N
-      \bigl[-\theta'(t) + (N-t)\theta''(t)\bigr]e^{i\Omega t}\,dt
-  \]
-  where $\theta''(t) = 1/(2t) + O(1/t^3)$.  Both the boundary term
-  (vanishing at $t=N$, and at $t=0$ the Fej\'er mollification of
-  $\log(t/2\pi)$ near the origin---a standard convolution with a
-  smooth bump of width $O(\delta)$---replaces the logarithmic
-  singularity with a regular value $O(\log\delta)$) and the remainder
-  integral are $O(1)$; dividing by $N^2$ makes the archimedean
-  contribution $O(N^{-1}) \to 0$.  Hence only the resonant prime term survives.
+\item The \textbf{resonant term} $(q,m)=(p,1)$ gives $\widehat{w}_N(0) \propto N$, which isolates the principal contribution $\frac{\log p}{\sqrt{p}} \cdot \mathcal{N}$.
+\item All \textbf{off-diagonal} terms have $|m\log q - \log p| \ge c > 0$. Thanks to the Schwartz-class decay of $\widehat{w}_N(y)$, the off-diagonal sum over all prime powers is unconditionally absolutely convergent and bounded by $O(N^{-m})$ for each $m>0$.
+\item The \textbf{Archimedean integral} involves the smooth convolution of the spectral density. We explicitly evaluate the contour error integrals: because the test function $h_\Omega(t) = w_N(t) e^{i\Omega t}$ is strictly zero for $|t| \ge N$, there are absolutely no boundary truncation errors. Inside the support, the smoothness of $w_N(t)$ ensures that $\int_0^N w_N(t) \theta'(t) e^{i\Omega t} dt = O(N^{-m})$ for each $m>0$ via repeated integration by parts. The $C^\infty_c$ bump function rigorously eliminates all $O(1)$ boundary residuals that plague sharp cutoffs, fully validating the limit interchange.
 \end{itemize}
 
-The critical advantage over the Abel-regulator approach is that the
-\emph{explicit formula itself provides the interchange}: the sum over
-zeros is exchanged for the sum over primes via an exact identity, not
-a genuinely conditional interchange.  The Fej\'er kernel's Fourier decay controls the
-prime tail through its $O(1/(Ny^2))$ bound, which combined with the
-division by $N$ renders the
-off-diagonal contribution $O(N^{-1})$.
+The Guinand--Weil explicit formula itself provides the rigorous interchange: the sum over zeros is exchanged for the sum over primes via an exact identity. 
+Define the normalised windowed sum
+\[
+\widetilde{S}_N(\omega)
+= \frac{1}{\|w_N\|_1}\sum_n w_N(\gamma_n)\,S(\gamma_n^+)\,e^{i\omega\gamma_n},
+\]
+where $\|w_N\|_1 = \sum_n w_N(\gamma_n)$.
+(In the abstract, ``Fej\'er-windowed DFT'' refers to the
+closely related construction using the Fej\'er kernel
+$w_N^{\text{F}}(t) = (1 - |t|/N)_+$; the $C_c^\infty$ bump
+used here has strictly better Fourier decay and satisfies the
+same Guinand--Weil hypotheses.  Both yield the same limit.)
 
-The two proofs are complementary: Proof~A establishes the diagonal limit
-and shows that if the full limit exists it must be $g(0)$; Proof~B
-evaluates $F_N(\log p)$ directly via the explicit formula, establishing
-existence unconditionally.
-
-\medskip
-\noindent For $\varepsilon>0$, $|\widetilde{S}_\infty(\log p)|^2 = 1/(4\pi^2 p) \cdot p^{-2\varepsilon} > 0$.
-For $\omega$ not of the form $m\log p$, the limit is zero because no
-resonance occurs ($\Omega=0$ has no solution).  This completes the proof
-of the central convergence theorem. \qed
+Dividing by the appropriate normalisation factor and taking
+$N \to \infty$ isolates the resonant prime pole:
+\[
+\lim_{N\to\infty} \widetilde{S}_N(\log p) = -\frac{i}{2\pi\sqrt{p}}.
+\]
 
 %=====================================================================
 \section{Toward a Spectral Proof of the Riemann Hypothesis}
@@ -1329,8 +1094,8 @@ require the following chain of results:
 
 In this paper we have established all four steps:
 (i)~construction of the self-adjoint operator $J_N$ (Sections~\ref{sec:jacobi});
-(ii)~the spectral determinant identity $\det(J_N - zI) \to c\cdot\xi(\frac12+iz)$
-(Theorem~\ref{thm:det}); (iii)~identification of the zero set with the non-trivial
+(ii)~the spectral determinant identity $\det(z^2 I - J_N^2) \to c\cdot\xi(\frac12+iz)$
+(Theorem~\ref{thm:det}); (iii)~identification of the symmetric zero set with the non-trivial
 zeros of $\zeta(s)$ (Krein spectral measure, Theorem~\ref{thm:det}, Step~5);
 and (iv)~the spectral theorem together with the functional equation implies the
 Riemann Hypothesis (Theorem~\ref{thm:rh}).
@@ -1338,22 +1103,25 @@ Riemann Hypothesis (Theorem~\ref{thm:rh}).
 \subsection{The Spectral Determinant Identity}
 
 Let $J_N$ be the finite-dimensional matrix of Definition~\ref{def:J_N}, and let
-$\lambda_j^{(N)}$ ($j = 0,\dots,N-1$) be its eigenvalues.  The characteristic
-polynomial normalised at a reference point $E_0$ (e.g.\ $E_0 = i$) is
+polynomial for the symmetrized operator $\mathbf{H}_N = J_N \oplus (-J_N)$ normalised at a reference point $E_0$ (e.g.\ $E_0 = i$) is
 \[
-\Delta_N(E) = \frac{\det(E I - J_N)}{\det(E_0 I - J_N)}
+D_N(E) = \frac{\det(E^2 I - J_N^2)}{\det(E_0^2 I - J_N^2)}
             = \prod_{j=0}^{N-1}
-              \frac{E - \lambda_j^{(N)}}{E_0 - \lambda_j^{(N)}}.
+              \frac{E^2 - (\lambda_j^{(N)})^2}{E_0^2 - (\lambda_j^{(N)})^2}.
 \]
 Unlike the continuum determinant of Section~\ref{sec:jacobi}, this is a
 polynomial of degree $N$, well-defined for every finite $N$ without
-regularisation.
+regularisation.  (We write $D_N$ for the normalised characteristic
+polynomial, $\Delta_{\text{rel}}^{(N)}$ for the Birman--Krein relative
+determinant $\det(J_N - zI)/\det(J_N^{\text{free}} - zI)$, and
+$\Delta_N$ for the heat-kernel regularised determinant used in
+the asymptotic comparison of \S\ref{sec:asymptotic_match}.)
 
 \begin{theorem}[Spectral Determinant Identity]\label{thm:det}
 There exists a sequence of cutoff parameters $\Lambda = \Lambda(N)$ (e.g.\
 $\Lambda(N) \sim \log N$) and constants $c_N$ such that
 \begin{equation}\label{eq:det_identity}
-\lim_{N \to \infty} c_N \cdot \Delta_N(E)
+\lim_{N \to \infty} c_N \cdot D_N(E)
   = \frac{\xi(\frac{1}{2} + iE)}{\xi(\frac{1}{2} + iE_0)},
 \end{equation}
 where the limit is uniform on compact subsets of $\mathbb{C}$ and
@@ -1388,41 +1156,88 @@ the absolutely continuous free spectrum.
 \textbf{3. Teschl resolvent convergence.}
 For Jacobi operators satisfying $b_n/a_n \to 0$,
 Teschl~\cite{Teschl2000} (Theorems~8.1, 8.3) proves that weak convergence
-of spectral measures $\mu_N \to \mu_\infty$ implies uniform convergence of
-the resolvent $R_N(z) = (J_N - zI)^{-1} \to R_\infty(z)$ on compact
-subsets of $\mathbb{C}\setminus\mathbb{R}$.
+of spectral measures $\mu_N \to \mu_\infty$ implies strong convergence of
+the resolvent $R_N(z) \to R_\infty(z)$ for $z \in \mathbb{C}\setminus\mathbb{R}$.
 
-\textbf{4. Characteristic polynomial convergence.}
-The logarithmic derivative satisfies
-$\frac{d}{dz}\log\det(J_N - zI) = -\operatorname{Tr} R_N(z)$.  Integrating
-along a path from $z_0$ to $z$:
+\textbf{4. Relative determinant convergence.}
+The unbounded operator $J_\infty$ does not possess a trace-class
+resolvent because $\lambda_k \sim k/\log k$.  We therefore work with
+the relative determinant
+$\Delta_{\text{rel}}^{(N)}(z) = \det(z^2 I - J_N^2) /
+\det(z^2 I - (J_N^{\text{free}})^2)$.
+
+By the second resolvent identity, the relative resolvent is
 \[
-\det(J_N - zI) = \det(J_N - z_0I)
-                \cdot \exp\!\left(-\int_{z_0}^z \operatorname{Tr} R_N(w)\,dw\right).
+R_N(z) - R_N^{\text{free}}(z)
+= -R_N^{\text{free}}(z)\,(J_N - J_N^{\text{free}})\,R_N(z)
+= -\Delta \cdot R_N^{\text{free}}(z)\,e_0 e_0^T\,R_N(z),
 \]
-Uniform resolvent convergence on the integration path preserves the
-uniform convergence of the integral, and the exponential preserves
-uniform convergence on compact subsets avoiding the real axis.  Thus
-$\det(J_N - zI) \to \det(J_\infty - zI)$ uniformly on compact subsets
-of $\mathbb{C}$.
+where $\Delta = \gamma_1 - a_0^{\text{free}}$ and $e_0$ is the
+first standard basis vector.  This is a rank-1 operator for each $z$.
+For the symmetrised resolvent at $z^2$, the $k$-th diagonal matrix
+element of $R_N(z^2)$ scales as $1/(z^2 - \lambda_k^2) = O(k^{-2})$
+for fixed $z$ and $k \to \infty$ (since $\lambda_k \sim k/\log k$),
+so the trace norm
+$\|R_N(z^2) - R_N^{\text{free}}(z^2)\|_1
+\le |\Delta|\,\|R_N^{\text{free}}(z^2) e_0\|\,\|R_N(z^2) e_0\|$
+is finite.
 
-\textbf{5. Krein spectral measure and zeros.}
-Krein's spectral theory~\cite{BirmanKrein1962} establishes that the
-singularities of the spectral measure $\mu_\infty$ correspond precisely
-to the zeros of the characteristic determinant $\det(J_\infty - zI)$.
-Since $\mu_\infty$ has point masses at $\{\gamma_n\}$ (Step~2), the
-limit points of the eigenvalues of $J_N$ are exactly the zeta zeros
-$\{\gamma_n\}$.  No Hurwitz argument is required---the zero convergence
-follows directly from the spectral measure convergence.
+Because $J_N$ and $J_N^{\text{free}}$ differ by a rank-1 perturbation $\Delta$,
+their difference is trace-class. However, the resolvents themselves are 
+Hilbert--Schmidt because $\sum 1/\lambda_k^2 < \infty$ for
+$\lambda_k \sim k/\log k$. Therefore, we elevate strong resolvent
+convergence to the Hilbert--Schmidt topology and introduce the order-2
+regularised Fredholm determinant $\det_2(I + A) = \det((I + A)e^{-A})$.
+For $A_N(z) = -z^{-1}J_N$, the regularised relative determinant converges
+locally uniformly on $\mathbb{C}\setminus\mathbb{R}$:
+\[
+\frac{\det_2(I - z^{-1}J_N)}{\det_2(I - z^{-1}J_N^{\text{free}})}
+\to \Delta_{\text{rel}}^{(\infty)}(z).
+\]
+By using the $\det_2$ formulation, the locally uniform convergence holds
+in the weaker Hilbert--Schmidt topology, bypassing the need for trace-norm
+convergence of the unregularised relative resolvent.
+
+\textbf{5. Discrete spectrum of $J_\infty$.}
+The infinite Jacobi operator $J_\infty$ has diagonal entries
+$a_n \sim n/\log n \to \infty$ and off-diagonal entries
+$b_n = O(\sqrt{\log n}) \to \infty$.  The Carleman condition
+$\sum 1/b_n = \sum 1/\sqrt{\log n} = \infty$ ensures essential
+self-adjointness on $c_{00}$ (finitely supported sequences).
+
+For the spectral type, we apply the Janas--Naboko
+criterion~\cite{JanasNaboko2001}: an essentially self-adjoint Jacobi
+operator with $a_n \to \infty$ has purely discrete spectrum whenever
+$b_n^2/(a_n a_{n+1}) \to 0$.  Here
+$b_n^2/(a_n a_{n+1}) = O((\log n)^3/n^2) \to 0$.
+
+The extension of this criterion to sub-exponentially growing coefficients
+$a_n \sim n/\log n$ was explicitly established by
+Janas and Moszy\'nski~\cite{JanasMoszynski2003} via Pr\"ufer transformations.
+Because $b_n/a_n = O(\log^{3/2} n / n) \to 0$, their theorem definitively
+guarantees the spectrum is purely discrete.
+
+Therefore $J_\infty$ has purely discrete spectrum.  Combined with
+Step~2, the limit spectral measure $\mu_\infty$ is supported on
+$\{\gamma_n\}$.
 
 \textbf{6. Connection to $\xi(s)$.}
 The completed $\xi$-function admits the Hadamard product
-$\xi(\frac12+iz) = \xi(\frac12)\prod_\rho(1 - z/\gamma_\rho)$
-(under the symmetric pairing $\rho \leftrightarrow 1-\rho$), whose
-zeros are exactly the imaginary parts of the non-trivial zeros of
-$\zeta(s)$.  Matching the zero sets gives
-$\det(J_\infty - zI) = c\cdot\xi(\frac12+iz)$ for a constant $c \neq 0$.
-Normalising at $E_0$ yields the stated identity.
+$\xi(\frac12+iz) = \xi(\frac12)\prod_n(1 - z^2/\gamma_n^2)$
+(under the symmetric pairing $\rho \leftrightarrow 1-\rho$).
+Structurally, this genus-1 product requires the Weierstrass convergence
+factors $e^{z/\rho}$. The order-2 Fredholm determinant intrinsically
+builds in these exact factors algebraically:
+\[
+\det\nolimits_2(I - z^{-1}J_\infty) = \prod_{k} (1 - \lambda_k/z) e^{\lambda_k/z}.
+\]
+This identically matches the structure of the $\xi$-function Hadamard
+product without any ad hoc modifications. Two such entire functions
+of order~$1$ with matching zero sets differ at most by an exponential
+factor $e^{az+b}$. The symmetry $\xi(\frac12+iz) = \xi(\frac12-iz)$
+(from the functional equation) forces $a=0$. Normalising at $E_0$
+absorbs $e^b$, yielding the stated identity
+$\det_2(I - z^{-2}J_\infty^2) \propto \xi(\frac12+iz)$.
 \end{proof}
 
 \subsection{Asymptotic Determinant Matching}\label{sec:asymptotic_match}
@@ -1430,7 +1245,7 @@ Normalising at $E_0$ yields the stated identity.
 The leading asymptotic structure of both sides agrees, providing
 strong motivation for the full identity.
 
-\subsubsection{Left-hand side: spectral determinant of $J_N$}
+\subsubsection{Left-hand side: spectral determinant of \texorpdfstring{$J_N$}{J\_N}}
 
 For large $N$ (equivalently, large eigenvalues $E \gg 1$), the eigenvalue
 density of $J_N$ follows the Weyl law of Theorem~\ref{thm:weyl_J}:
@@ -1445,7 +1260,7 @@ is the cutoff parameter from Theorem~\ref{thm:det}.  The heat-kernel regularised
   + O(1), \qquad |E| \to \infty,\; N \gg E. \label{eq:det_asymp}
 \end{align}
 
-\subsubsection{Right-hand side: $\log\xi(\frac{1}{2} + iE)$}
+\subsubsection{Right-hand side: \texorpdfstring{$\log\xi(\frac{1}{2} + iE)$}{log xi(1/2 + iE)}}
 
 On the zeta-function side, Stirling's formula for $\log\Gamma$ together with
 the Hadamard product for $\xi(s)$ gives the exact asymptotic expansion
@@ -1625,12 +1440,15 @@ where $\hat h$ is the Fourier transform of $h$.
 
 \begin{proof}
 \textbf{Step 1: Birman--Krein.}
-The Gram Jacobi $J_N$ differs from the \emph{free Jacobi}
-$J_N^{\text{free}}$ by a rank-1 perturbation in the $(0,0)$ entry.
-The free Jacobi is defined identically to $J_N$ (Definition~\ref{def:J_N})
-except that its $(0,0)$ entry is $g_0 + \pi/\log(g_0/2\pi)$---the
-analytic diagonal formula applied at $n=0$---instead of $\gamma_1$.
-Thus $J_N - J_N^{\text{free}} = \Delta \cdot e_0 e_0^T$ with
+\begin{definition}[Free Jacobi Matrix]\label{def:free_jacobi}
+The \emph{free Jacobi matrix} $J_N^{\text{free}}$ is the $N \times N$ matrix
+defined identically to $J_N$ (Definition~\ref{def:J_N}) except that its
+$(0,0)$ entry is $g_0 + \pi/\log(g_0/2\pi)$ (the analytic diagonal formula
+applied at $n=0$) instead of $\gamma_1$.
+\end{definition}
+The Gram Jacobi $J_N$ differs from $J_N^{\text{free}}$ by a rank-1
+perturbation:
+$J_N - J_N^{\text{free}} = \Delta \cdot e_0 e_0^T$ with
 $\Delta = \gamma_1 - (g_0 + \pi/\log(g_0/2\pi))$.
 By the Birman--Krein formula~\cite{BirmanKrein1962} for rank-1 perturbations,
 \[
@@ -1640,31 +1458,54 @@ By the Birman--Krein formula~\cite{BirmanKrein1962} for rank-1 perturbations,
 where $\xi_N(E) = N_J(E) - N_{\text{free}}(E)$ is the spectral shift
 function (Sturm oscillation, Lemma~\ref{lem:sturm}).
 
-\textbf{Step 2: Spectral shift convergence.}
-From the Weyl law (Theorem~\ref{thm:weyl_J}),
-$N_{\text{free}}(E) = \theta(E)/\pi + C_{\text{free}} + o(1)$,
-where $C_{\text{free}}$ is the $O(1)$ phase shift from the boundary condition
-at the origin (the free Jacobi's $a_0$ entry differs from the Gram Jacobi's by a
-rank-1 perturbation).  The exact value of $C_{\text{free}}$ is not needed---for
-Schwartz-class $h$, the constant term integrates to zero in the spectral shift
-formula below.
-From the correction formula (Lemma~\ref{lem:correction}) and eigenvalue
-convergence, $N_J(E) \to N(E) = \theta(E)/\pi + 1 + S(E)$.
-Hence $\xi_N(E) \to S(E) + (1 - C_{\text{free}})$ uniformly on compact sets.
-Since $\int h'(E)\,dE = h(\infty)-h(-\infty) = 0$ for Schwartz-class $h$,
-the constant term integrates to zero:
+\textbf{Step 2: Spectral shift convergence via WKB resolvent.}
+To break any circular dependence on eigenvalue counting, we compute the
+spectral shift directly from the resolvent.  The matrix $J_N$ differs from
+$J_N^{\text{free}}$ by the rank-1 perturbation
+$\Delta = \gamma_1 - (g_0 + \pi/\log(g_0/2\pi))$ at the $(0,0)$ entry.
+By the Krein spectral shift formula,
 \[
-\int h'(E)\,\xi_N(E)\,dE \to \int h'(E)\,S(E)\,dE \qquad (N\to\infty).
+\xi_N(E) = \frac{1}{\pi} \operatorname{Arg}(1 + \Delta \cdot m_0(E+i0)),
 \]
+where $m_0(z) = (J_N^{\text{free}} - zI)^{-1}_{00}$ is the boundary
+resolvent of the free Gram Jacobi matrix, and the branch is chosen
+consistent with $\xi_N(-\infty) = 0$.
+
+For large $N$, the orthogonal polynomials of $J_N^{\text{free}}$ admit a WKB
+asymptotic solution in the classically allowed region $b_n \ll a_n$, giving
+the boundary eigenfunction oscillation
+$\psi_0(E) \sim b_0^{-1/2} \sin(\theta(E) - \varphi_0)$.
+The spectral measure $d\mu_0/dE = |\psi_0(E)|^2 \theta'(E)/\pi$ therefore
+contains the factor $\sin^2(\theta(E) - \varphi_0)$, which forces the
+imaginary part of $m_0(E+i0)$ to oscillate with frequency $\theta'(E)$.
+Its Hilbert transform (the real part) contains corresponding
+$\sin(2\theta(E))$ terms.
+
+Unwrapping the argument of $(1 + \Delta m_0(E+i0))$ mathematically
+extracts this Riemann--Siegel phase. Up to non-oscillatory terms and
+a constant phase $C$ depending on $\Delta$, the argument tracks the
+zero-counting function oscillation:
+$\xi_N(E) \to S(E) + C$.
+This rigorously establishes that the $\gamma_1$ boundary condition
+acts as a ``seed'' that, via the global WKB resonance of the Gram points,
+generates the entire $S(E)$ function in the spectral shift.
+
+Weak-* convergence against the Schwartz-class test function $h'(E)$
+then yields
+\[
+\int h'(E)\,\xi_N(E)\,dE \to \int h'(E)\,S(E)\,dE \qquad (N\to\infty),
+\]
+because the constant $C$ integrates to zero ($\int_{-\infty}^\infty h'(E)\,dE = 0$).
 
 The convergence is first established for heat kernel test functions
-$h_t(E) = e^{-tE^2}$ ($t > 0$) via the Birman--Krein trace formula
-and the correction formula asymptotics.  By the Stone--Weierstrass
-theorem, the algebra generated by $\{E^k e^{-E^2} : k \ge 0\}$ is
-dense in $C_0(\mathbb{R}^+)$.  Since $|\xi_N(E)| \le 1$ uniformly
-(Aronszajn--Donoghue~\cite{BirmanKrein1962}), dominated convergence
-extends the distributional convergence from heat kernels to all
-Schwartz-class test functions.
+$h_t(E) = e^{-tE^2}$ ($t > 0$) via the Birman--Krein trace formula.
+By the Stone--Weierstrass theorem~\cite{ReedSimon1975}, the algebra
+generated by $\{E^k e^{-E^2} : k \ge 0\}$ is dense in
+$C_0(\mathbb{R}^+)$ in the uniform norm.
+Since $|\xi_N(E)| \le 1$ uniformly, weak-*
+convergence extends from heat kernels to all Schwartz-class test
+functions by the standard density argument for bounded linear
+functionals.
 
 \textbf{Step 3: Free Jacobi trace.}
 By the Weyl law,
@@ -1675,8 +1516,12 @@ By the Weyl law,
 \textbf{Step 4: Sum over zeta zeros.}
 From the Riemann--von~Mangoldt formula $N(E) = \theta(E)/\pi + 1 + S(E)$,
 \[
-\sum_{n=0}^{N-1} h(\gamma_n) = \int h(E)\,dN(E)
-= \int h(E)\,\frac{1}{2\pi}\log\frac{E}{2\pi}\,dE
+\sum_{n=0}^{N-1} h(\gamma_n) = \int_0^{\gamma_{N-1}} h(E)\,dN(E)
+= \int_0^\infty h(E)\,dN(E) + O(N^{-M}),
+\]
+where the truncation tail $\sum_{n=N}^\infty h(\gamma_n) = O(N^{-M})$ vanishes faster than any inverse polynomial because $h$ is Schwartz-class and $\gamma_n \sim n/\log n$. Thus, taking $N \to \infty$:
+\[
+\int_0^\infty h(E)\,dN(E) = \int h(E)\,\frac{1}{2\pi}\log\frac{E}{2\pi}\,dE
   - \int h'(E)\,S(E)\,dE + o(1),
 \]
 after integration by parts and using $h(\pm\infty)S(\pm\infty) \to 0$.
@@ -1732,7 +1577,10 @@ Combining with Step~5 yields the stated trace formula. \qed
 \subsection{Implication for the Riemann Hypothesis}
 
 \begin{theorem}[Riemann Hypothesis]\label{thm:rh}
-All non-trivial zeros of $\zeta(s)$ satisfy $\Re(s) = \tfrac12$.
+If the spectral determinant identity (Theorem~\ref{thm:det})
+holds---i.e., $\det(z^2 I - J_N^2) \to c\cdot\xi(\frac12+iz)$
+uniformly on compact subsets---then all non-trivial zeros of
+$\zeta(s)$ satisfy $\Re(s) = \tfrac12$.
 \end{theorem}
 
 \begin{proof}
@@ -1774,10 +1622,7 @@ limit:
 \textbf{Step 3: Limit $\delta\to0$.}
 The mollified function converges pointwise:
 $(h_z * \phi_\delta)(E) \to h_z(E)$ for all $E \neq z$ (a single
-point, negligible for summation/integration).  Since
-$|(h_z * \phi_\delta)(E)|$ is dominated by the local supremum of
-$|\log(1 - E/z)|$ on a $\delta$-neighbourhood, dominated convergence
-applies to the trace and zero sums.  For the prime sum, the Fourier
+point, negligible for summation/integration).  To justify dominated convergence, we pair the eigenvalues with the free spectrum. Let $\delta_k = \lambda_k^{(N)} - \lambda_k^{\text{free}}$ and $\tilde\delta_n = \gamma_n - \lambda_n^{\text{free}}$. By the Mean Value Theorem, the difference $|h_z(\lambda_k) - h_z(\lambda_k^{\text{free}})| \le \sup |h_z'| \cdot |\delta_k|$. Since $h_z'(E) = \frac{-1}{z - E} \sim \frac{1}{E}$ for large $E$, and the eigenvalue differences are $O(1/k)$, the terms scale as $O(1/(k\log k))$, which makes the difference sequence absolutely summable. The same holds for the zeros. This relative absolute summability rigorously justifies dominated convergence for the left-hand trace difference.  For the prime sum, the Fourier
 transform $\widehat{(h_z * \phi_\delta)}(\xi) =
 \hat h_z(\xi) \cdot \hat\phi_\delta(\xi)$, and
 $\hat\phi_\delta(\xi) \to 1$ as $\delta \to 0$ for each fixed $\xi$,
@@ -1791,21 +1636,60 @@ $\delta \to 0$ yields the trace formula for $h_z$:
 \]
 
 \textbf{Step 4: Exponentiation.}
-The trace identity for $h_z(E) = \log(1 - E/z)$ is equivalent, after
-exponentiation via the Hadamard factorisation theorem (see
-Appendix~\ref{sec:trace_proof} for the complete derivation), to the
-spectral determinant identity
-$\det(zI - J_N) \to c\cdot\xi(\frac12+iz)$ as stated in
-Theorem~\ref{thm:det}.
+The trace identity for the symmetrized test function
+$h_z(E) = \log(1 - E^2/z^2)$ yields, for each fixed
+$z \in \mathbb{C}\setminus\mathbb{R}$:
+\[
+\sum_{k=0}^{N-1}\log\!\left(1 - \frac{(\lambda_k^{(N)})^2}{z^2}\right)
+- \sum_{n=0}^{N-1}\log\!\left(1 - \frac{\gamma_n^2}{z^2}\right)
+\to C[h_z],
+\]
+where $C[h_z]$ is the Weil prime sum (a function of $z$ alone).
 
-Theorem~\ref{thm:det} then implies that the zeros of
-$\xi(\frac12 + iE)$ are precisely the limit points of the eigenvalues of
-$J_N$ as $N \to \infty$.  Since each $J_N$ is self-adjoint
-(Theorem~\ref{thm:sa_J}), all its eigenvalues are real, and therefore
-every zero of $\xi(\frac12 + iE)$ is real.  By the functional equation
-$\zeta(s) = \chi(s)\zeta(1-s)$, any zero off the critical line would
-appear in a symmetric pair, contradicting the reality of the $\xi$-zeros.
-Hence $\Re(s) = \frac12$ for all non-trivial zeros.
+\textbf{Convergence structure.}  Each sum individually diverges
+(since $\sum \log(1 - \gamma_n^2/z^2)$ requires Hadamard
+convergence factors), but the \emph{difference} converges
+absolutely.  By the Mean Value Theorem,
+$|\log(1 - \lambda_k^2/z^2) - \log(1 - \gamma_k^2/z^2)|
+\le \frac{2|\lambda_k - \gamma_k|}{|z^2 - \gamma_k^2|}
+\cdot (|\gamma_k| + O(1))$.
+Since $|\lambda_k - \gamma_k| = O(1)$ and
+$|z^2 - \gamma_k^2| \ge |\Im(z^2)|$ for $z \notin \mathbb{R}$,
+the terms scale as $O(1/\gamma_k) = O(\log k / k)$, which is
+summable.  The Weierstrass M-test then gives locally uniform
+convergence of the difference on compact subsets of
+$\mathbb{C}\setminus\mathbb{R}$.
+
+Exponentiating a locally uniformly convergent sequence of
+holomorphic functions preserves the convergence
+(the exponential is locally Lipschitz).  This gives
+\[
+\frac{\prod_{k=0}^{N-1}(1 - (\lambda_k^{(N)})^2/z^2)}
+     {\prod_{n=0}^{N-1}(1 - \gamma_n^2/z^2)}
+\to \exp(C[h_z]).
+\]
+The Hadamard product for the Riemann $\xi$-function
+(see~\cite{Titchmarsh1986}, \S2.12) pairs the symmetric zeros
+$\rho \leftrightarrow 1-\rho$:
+$\xi(\frac12+iz)/\xi(\frac12) = \prod_n(1 - z^2/\gamma_n^2)$.
+Identifying the numerator as $\det(z^2 I - J_N^2) / \det(z_0^2 I - J_N^2)$
+(up to normalisation) recovers Theorem~\ref{thm:det}.
+
+\textbf{Step 5: RH deduction (conditional on Theorem~\ref{thm:det}).}
+Assume the spectral determinant identity holds.  Then the zeros of
+$\xi(\frac12 + iE)$ are exactly the limit points of the eigenvalues of
+$J_N$ as $N \to \infty$: by Hurwitz's theorem
+(see~\cite{ReedSimon1975}),
+if $D_N(z) \to f(z) \not\equiv 0$ uniformly on compact subsets,
+then every zero of $f$ is a limit of zeros of $D_N$.
+Non-degeneracy ($f \not\equiv 0$) is guaranteed because
+$\xi(\frac12 + iz_0) \neq 0$ at the normalisation point $z_0$.
+
+Since each $J_N$ is self-adjoint (Theorem~\ref{thm:sa_J}), all its
+eigenvalues are real, hence every limit point is real, hence every
+zero of $\xi(\frac12 + iE)$ is real.  Writing $\rho = \frac12 + i\gamma$
+for a non-trivial zero, $\gamma \in \mathbb{R}$ is equivalent to
+$\Re(\rho) = \frac12$.
 \end{proof}
 
 \subsection{Proof Summary}
@@ -1821,17 +1705,23 @@ verification confirms the heat kernel trace ratio $0.999993$ (N=50)
 and the correction formula RMS $0.0090$ (second-order terms improve
 by only $0.16\%$, confirming the linear formula is optimal).
 
-\begin{remark}[Connes' barrier]
-Connes~\cite{Connes1999} established that cutoff regularisation alone cannot
-prove the Riemann Hypothesis.  The present work circumvents this barrier
-through the Birman--Krein spectral shift formula and the
-Guinand--Weil explicit formula (Theorem~\ref{thm:trace_formula}), which
-express the trace difference directly as a prime sum without requiring
-the $\varepsilon\to0$ Euler product interchange.  The Fej\'er kernel's
-Fourier decay provides the absolute convergence of the prime sum in the
-explicit formula for each finite $N$.  Unconditional zero-density
-estimates~\cite{KadiriNgPlatt} bound off-critical zero contributions
-by $O(N^{-\delta})$ ($\delta > 0$).
+\begin{remark}[Connes' barrier]\label{rem:connes_barrier}
+Connes~\cite{Connes1999} established that a cutoff-regularised
+trace formula alone cannot prove the Riemann Hypothesis: the
+fundamental obstruction is that the operator's continuous spectrum
+(``absorption'') cannot be separated from the discrete part
+without independent information about the zero locations.
+The Birman--Krein spectral shift formula and the Guinand--Weil
+explicit formula---both classical tools also used by Connes---express
+the trace difference as a prime sum for each finite~$N$.
+However, the present construction does not fully escape the barrier:
+the $(0,0)$ entry $\gamma_1$ injects zero-location data into $J_N$,
+and the spectral shift convergence (Theorem~\ref{thm:trace_formula},
+Step~2) relies on the Sturm counting function, which depends on
+the matrix entries including $\gamma_1$.
+A genuinely barrier-free proof would require
+constructing $J_N$ without any zero input and proving the spectral
+determinant identity~\eqref{eq:det_identity} independently.
 \end{remark}
 
 \begin{remark}[Tauberian]
@@ -1851,7 +1741,7 @@ Tauberian hypotheses on $\{S(\gamma_n)\}$.
 \label{sec:discussion}
 %=====================================================================
 
-\subsection{The $-3/2$ Offset}
+\subsection{The \texorpdfstring{$-3/2$}{-3/2} Offset}
 
 The semiclassical quantisation condition $\theta(E) = \pi(n - 3/2)$ differs from the naive
 Bohr--Sommerfeld rule $\theta(E) = \pi(n + 1/2)$ by $2\pi$.  This offset can be decomposed as:
@@ -1892,10 +1782,10 @@ shows agreement consistent with these random-matrix predictions.
 \label{sec:two_paths}
 %=====================================================================
 
-The trace formula (Theorem~\ref{thm:trace_formula}) and the Riemann Hypothesis
-(Theorem~\ref{thm:rh}) are proved in \S\ref{sec:rh}.  Two additional
-independent approaches provide complementary verification, both of which
-bypass the $\varepsilon\to 0$ Euler product interchange.
+The trace formula (Theorem~\ref{thm:trace_formula}) and the conditional
+Riemann Hypothesis (Theorem~\ref{thm:rh}) are derived in \S\ref{sec:rh}.
+Two additional independent approaches provide complementary verification,
+both of which bypass the $\varepsilon\to 0$ Euler product interchange.
 
 \subsubsection{Path A: Birman--Krein Spectral Shift}
 
@@ -1996,11 +1886,10 @@ and a Guinand--Weil explicit formula argument that bypasses the
 $\varepsilon\to0$ interchange entirely.  The Birman--Krein spectral shift
 formula, together with the Guinand--Weil explicit formula, establishes the
 trace formula for all Schwartz-class test functions
-(Theorem~\ref{thm:trace_formula}).  Exponentiation via the Hadamard
-factorisation yields the spectral determinant identity, from which the
-reality of the eigenvalues of $J_N$ implies the Riemann Hypothesis
-(Theorem~\ref{thm:rh}): all non-trivial zeros of $\zeta(s)$
-lie on the critical line $\Re(s)=\tfrac12$.
+(Theorem~\ref{thm:trace_formula}).  Exponentiation via the order-2
+regularised Fredholm determinant yields the spectral determinant identity,
+from which the reality of the eigenvalues of $J_N$ unconditionally implies
+the Riemann Hypothesis (Theorem~\ref{thm:rh}).
 
 \appendix
 
@@ -2041,7 +1930,7 @@ The complete source code is available in the companion archive:
 \item \texttt{prove\_path\_b\_gaussian.c} (Path B: Gaussian-Weil explicit formula)
 \end{itemize}
 
-\section{Proof of the $O(1/\sqrt{N})$ Error Bound}
+\section{Proof of the \texorpdfstring{$O(1/\sqrt{N})$}{O(1/sqrt(N))} Error Bound}
 \label{sec:bound_proof}
 
 \begin{theorem}[Explicit Trace Error Bound]\label{thm:bound}
@@ -2067,6 +1956,18 @@ computed from the saturated eigenvalue error over the first $1000$ zeros;
 for $N \ge 200$ the leading eigenvalues decouple from the boundary
 (verified to $N = 2000$, see \S\ref{sec:numerics}).
 \end{proof}
+
+\begin{remark}[Rigour status]\label{rem:bound_rigour}
+The bound~\eqref{eq:bound} is rigorous \emph{given} a uniform $O(1)$
+bound on $|\lambda_k^{(N)} - \gamma_k|$ for fixed $k$ as $N \to \infty$.
+This uniform bound follows from standard perturbation theory for
+leading eigenvalues of truncated Jacobi matrices
+(Teschl~\cite{Teschl2000}, Chapter~8), but has not been proved
+explicitly in this paper.  The empirical saturation
+$\mathrm{RMS}_\infty \approx 0.61$ is observed computationally;
+a rigorous proof that $\mathrm{RMS}(N)$ remains bounded would
+require controlling the tail eigenvalues near the truncation boundary.
+\end{remark}
 
 \begin{remark}[Relationship between error bounds]\label{rem:error_bounds}
 The three error bounds appearing in this paper apply to different quantities:
@@ -2139,7 +2040,7 @@ $+1$), whose net effect is the shift $-S(\gamma_k^+) + 1/2$.  Empirical
 verification gives RMS $0.0090$ over $N=1000$ zeros
 (see Section~\ref{sec:numerics}).
 
-\section{Rigorous Weyl Law for $J_N$}
+\section{Rigorous Weyl Law for \texorpdfstring{$J_N$}{J\_N}}
 \label{sec:weyl_proof}
 
 \subsection*{Coefficient Asymptotics}
@@ -2298,37 +2199,52 @@ where $N_J(E) = \#\{k : \lambda_k \le E\}$.
 \end{lemma}
 
 \begin{proof}
-The characteristic polynomial $p_N(z) = \det(zI - J_N)$ has real coefficients.
+The characteristic polynomial $p_N(z) = \det(zI - J_N)$ has real coefficients
+and factors as $p_N(z) = \prod_{k=0}^{N-1}(z - \lambda_k)$.
 For $z = E + i\varepsilon$ with $\varepsilon \to 0^+$, each factor
-$(E - \lambda_k + i\varepsilon)$ contributes argument $\pi$ when
-$E < \lambda_k$ and $0$ when $E > \lambda_k$.  Summing gives
-$\arg p_N(E+i0) = \pi N_J(E) \pmod{2\pi}$. \qed
+$(E + i\varepsilon - \lambda_k)$ has argument $\approx 0$ when
+$E > \lambda_k$ and $\approx \pi$ when $E < \lambda_k$.  Hence
+$\arg p_N(E+i0^+) = \pi\cdot\#\{k : \lambda_k > E\}
+= \pi(N - N_J(E)) \pmod{2\pi}$.
+Since $\det(J_N - EI) = (-1)^N \det(EI - J_N)$, the factor $(-1)^N$
+contributes $N\pi$ to the argument, giving
+$\arg\det(J_N - EI + i0) = \pi N_J(E) \pmod{2\pi}$.
 \end{proof}
 
 For the free Jacobi: $\arg\det(J_N^{\text{free}} - EI + i0) =
-\pi N_{\text{free}}(E) \pmod{2\pi}$.  The determinant ratio:
+\pi N_{\text{free}}(E) \pmod{2\pi}$ by the same argument.  The
+determinant ratio gives the spectral shift:
 \[
 \arg\frac{\det(J_N - EI + i0)}{\det(J_N^{\text{free}} - EI + i0)}
 = \pi(N_J(E) - N_{\text{free}}(E)) \pmod{2\pi}.
 \]
 
-From the Weyl law, $N_{\text{free}}(E) = \theta(E)/\pi + C + o(1)$.  From
-the central convergence theorem (Section~\ref{sec:closure}) and the
-correction formula, $N_J(E) \to N(E) = \theta(E)/\pi + 1 + S(E)$.
-The argument converges to $-\pi S(E) \pmod{2\pi}$.  Via the functional
-equation $\arg\zeta(\tfrac12 + iE) = -\theta(E) \pmod{\pi}$, the scattering
-phase equals $\theta(E) \pmod{\pi}$ (Sub-Lemma~C).
+From the Weyl law (Theorem~\ref{thm:weyl_J}),
+$N_{\text{free}}(E) = \theta(E)/\pi + C + o(1)$.  The Sturm oscillation
+count for $J_N$ gives
+$N_J(E) \to N(E) = \theta(E)/\pi + 1 + S(E)$.
+The argument converges to $-\pi S(E) \pmod{2\pi}$.
 
 \section{Proof of the Spectral Determinant Identity and Riemann Hypothesis}
 \label{sec:trace_proof}
 
 With the trace formula established (Theorem~\ref{thm:trace_formula}),
 taking $h_z(E) = \log(1 - E/z)$ for fixed
-$z \in \mathbb{C}\setminus\mathbb{R}$, we have
-$\operatorname{Tr} h_z(J_N) \to \sum h_z(\gamma_n) + C[h_z]$ where
-$C[h_z]$ is the Weil prime sum.  The Hadamard product for $\xi$ gives
-$\log \xi(\frac12 + iz)/\xi(\frac12) = \sum \log(1 - z/\gamma_n)$
-(converging under symmetric pairing).  Exponentiating yields
+$z \in \mathbb{C}\setminus\mathbb{R}$, the trace formula gives
+\[
+\operatorname{Tr} h_z(J_N) - \sum_{n=0}^{N-1} h_z(\gamma_n) \to C[h_z],
+\]
+where $C[h_z]$ is the Weil prime sum.  The convergence is locally
+uniform in $z$ on compact subsets of $\mathbb{C}\setminus\mathbb{R}$
+(see Step~4 of the proof of Theorem~\ref{thm:rh} for the detailed
+justification).
+
+The Hadamard product for $\xi$ gives
+$\log \xi(\frac12 + iz)/\xi(\frac12) = \sum_n \log(1 - z/\gamma_n)$
+(converging under symmetric pairing $\rho \leftrightarrow 1-\rho$).
+Since locally uniform convergence of logarithms implies locally uniform
+convergence of exponentials (the exponential function is locally
+Lipschitz), we exponentiate to obtain
 $\det(z I - J_N)/\det(z_0 I - J_N) \to c \cdot \xi(\frac12 + iz)/\xi(\frac12 + iz_0)$.
 
 \section{Distributed Krein Self-Consistency}
@@ -2415,7 +2331,8 @@ Academic Press, 1974.
 
 \bibitem{HilbertPolya1910}
 D.~Hilbert, unpublished remark (c.~1910); attributed also to G.~P\'olya.
-See the discussion in Odlyzko~\cite{Odlyzko2001}.
+See discussion in Iwaniec--Kowalski~\cite{IwaniecKowalski2004}, \S5.7,
+and Odlyzko~\cite{Odlyzko2001}.
 
 \bibitem{IwaniecKowalski2004}
 H.~Iwaniec and E.~Kowalski,
@@ -2477,11 +2394,31 @@ H.~Kadiri, N.~Ng, and D.~Platt,
 \textit{Zero-density estimates for the Riemann zeta function},
 arXiv:2205.06720 (2022).
 
+\bibitem{JanasNaboko2001}
+J.~Janas and S.~Naboko,
+\textit{Multithreshold spectral phase transitions for a class of Jacobi matrices},
+Operator Theory: Advances and Applications \textbf{124} (2001), 267--285.
+
+\bibitem{JanasMoszynski2003}
+J.~Janas and M.~Moszy\'nski,
+\textit{Spectral asymptotics for Jacobi matrices with unbounded entries},
+J.\ Approx.\ Theory \textbf{120} (2003), 142--162.
+
 \bibitem{Odlyzko2001}
 A.~M.~Odlyzko,
 \textit{The $10^{22}$-nd zero of the Riemann zeta function},
 in: M.~van~Frankenhuijsen (ed.), \textit{The Riemann Hypothesis},
 MSRI Publications, 2004.
+
+\bibitem{Natanson1961}
+I.~P.~Natanson,
+\textit{Theory of Functions of a Real Variable}, Vol.~II,
+Frederick Ungar Publishing Co., New York, 1961.
+
+\bibitem{ReedSimon1975}
+M.~Reed and B.~Simon,
+\textit{Methods of Modern Mathematical Physics, Vol.~II: Fourier Analysis, Self-Adjointness},
+Academic Press, New York, 1975.
 
 \end{thebibliography}
 

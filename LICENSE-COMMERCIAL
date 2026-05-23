@@ -1,0 +1,38 @@
+# Commercial License for RH Proof Source Code
+
+The source code in this folder (`*.c`, `*.h` files) is dual-licensed:
+
+1. **AGPLv3** — Free for open-source use (see LICENSE file)
+2. **Commercial License** — For closed-source/enterprise use (paid)
+
+## Why a Commercial License?
+
+The AGPLv3 requires any network service using this code to disclose its entire
+source code. Most enterprises cannot comply with this requirement. A commercial
+license allows:
+- Use in proprietary products without disclosure
+- Embedding in commercial software
+- SaaS/cloud deployment without AGPLv3 obligations
+
+## Pricing Inquiry
+
+For commercial licensing rates and terms, contact:
+
+**Dan Alec Yamaguchi**  
+Email: danalec@gmail.com  
+ORCID: 0009-0002-9725-7779
+
+## What's Included
+
+| Component | AGPLv3 | Commercial |
+|-----------|--------|------------|
+| Source code (.c/.h) | ✅ | ✅ |
+| Modifications allowed | ✅ (must share) | ✅ (no sharing) |
+| SaaS deployment | ❌ (must open source) | ✅ |
+| Enterprise support | ❌ | Available |
+| Patent indemnity | ❌ | ✅ |
+
+## Source Files Covered
+
+src/*.c
+src/*.h

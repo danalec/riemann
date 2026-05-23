@@ -1,0 +1,106 @@
+# rh_proof/.gitignore — Build artifacts and temporary files
+
+# ===========================================
+# Build directories (compiled objects/exes)
+# ===========================================
+obj/
+bin/
+artifacts/
+
+# Object files
+*.o
+*.obj
+
+# Executables
+*.exe
+*.out
+*.dll
+*.so
+*.dylib
+
+# ===========================================
+# LaTeX artifacts
+# ===========================================
+# Intermediate files
+*.aux
+*.log
+*.lof
+*.lot
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+
+# Index and glossary
+*.idx
+*.ilg
+*.ind
+*.ist
+*.glo
+*.gls
+*.glg
+*.acn
+*.acr
+*.alg
+
+# Navigation
+*.nav
+*.snm
+*.vrb
+
+# Output formats (uncomment to ignore)
+# *.dvi
+# *.ps
+# *.pdf
+# *.xdv
+
+# Makeindex
+*.nlo
+*.nls
+*.nlg
+
+# Editor/IDE
+*.swp
+*.swo
+*.bak
+*~
+
+# ===========================================
+# OS-specific
+# ===========================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+.directory
+
+# ===========================================
+# IDE/Editor files
+# ===========================================
+.vscode/
+.idea/
+.qwen/
+*.sublime-project
+*.sublime-workspace
+
+# ===========================================
+# Miscellaneous
+# ===========================================
+*.tmp
+*.temp
+-p/

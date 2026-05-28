@@ -5,6 +5,12 @@
  * Commercial licenses available for enterprise use.
  * Contact: danalec@gmail.com
  * See LICENSE-COMMERCIAL for details.
+ *
+ * @brief   Test if Fejer kernel cures the p^{-1/2} divergence
+ * @paper   yamaguchi-rh-2026.tex, Section 5.4
+ * @theorem Theorem I (Guinand-Weil Explicit Formula)
+ * @proof   Fejer kernel 1/(N*y^2) decay provides convergence factor
+ * @step    2 -- Fejer summation convergence test
  */
 
  /* test_fejer_prime_sum.c - Test if Fejer kernel cures the p^{-1/2} divergence
@@ -24,6 +30,10 @@
 
 #ifndef M_PI
 #define M_PI 3.141592653589793238462643383279502884
+#endif
+
+#ifdef _WIN32
+#include <windows.h>
 #endif
 
 /* Fejer kernel Fourier transform: F_N(y) = (N - |y|/N) for |y| <= N, decays as 1/(Ny^2) */
@@ -48,6 +58,10 @@ static int is_prime(long n) {
 }
 
 int main(void) {
+#ifdef _WIN32
+  SetConsoleOutputCP(65001);
+#endif
+
     printf("=== Fejer-Weighted Prime Sum Convergence Test ===\n\n");
     
     printf("HYPOTHESIS: Fejer kernel decay might cure p^{-1/2} divergence.\n\n");

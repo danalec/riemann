@@ -1,6 +1,12 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later
  * Copyright (C) 2026 Dan Alec Yamaguchi
  *
+ * @brief   Fejer kernel closure proof: eps->0
+ * @paper   yamaguchi-rh-2026.tex, §9
+ * @theorem Theorem I
+ * @proof   Prime tail control via Fejer decay
+ * @step    4
+ *
  * prove_epsilon_zero_closure.c - Verifies the eps = 0 closure proof
  *
  * Approaches:
@@ -28,6 +34,10 @@
 #endif
 
 #include "refdata_1000.h"
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 /* ============================================================
  * Prime sieve and helpers
@@ -471,6 +481,10 @@ static void test_fejer_exact_prime_sum(void) {
  * ============================================================ */
 
 int main(void) {
+#ifdef _WIN32
+  SetConsoleOutputCP(65001);
+#endif
+
     printf("==========================================================\n");
     printf("  eps = 0 Proof Gap Closure - Verification Suite\n");
     printf("  Central Convergence Theorem: S~_N(log p) -> -i/(2*pi*sqrt(p))\n");

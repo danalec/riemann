@@ -6,164 +6,132 @@
 # Contact: danalec@gmail.com
 # See LICENSE-COMMERCIAL for details.
 #
-# Makefile - RH Proof Build System (Paper Appendix A)
+# ===========================================================================
+# Cross-Platform Build Support
+# ===========================================================================
+# Verified compilers: gcc (all platforms), clang (Linux/macOS)
 #
-# Build all:     make all
-# Build one:     make derive_k
-# Clean:         make clean
-# Run tests:     make test
+# Platform        | Compiler     | OpenMP flags              | Notes
+# ----------------|--------------|---------------------------|------------------
+# Windows (MSYS2) | gcc          | -fopenmp                  | Requires MinGW-w64
+# Windows (MSYS2) | clang        | -fopenmp                  | Requires libomp
+# Linux           | gcc          | -fopenmp                  |
+# Linux           | clang        | -fopenmp                  | Requires libomp
+# macOS           | clang        | -Xpreprocessor -fopenmp   | Requires libomp (brew)
+# macOS           | gcc (Homebrew)| -fopenmp                 |
 #
-# Requirements: GMP (optional, for derive_k_gmp)
-#   Linux:   apt install libgmp-dev
-#   macOS:   brew install gmp
-#   Windows: Strawberry Perl provides GMP (C:/Strawberry/c/)
+# Portability:
+#   - All math constants (M_PI, M_E, M_SQRT2) have portable fallbacks
+#   - No POSIX-only headers in src/ (no unistd.h, sys/time.h, etc.)
+#   - Windows UTF-8 console (SetConsoleOutputCP) guarded by #ifdef _WIN32
+#   - OpenMP pragmas gracefully ignored when compiler lacks support
+#   - MPFR/GMP required (arb.h) — install via package manager
+# ===========================================================================
 
-CC = gcc
-CFLAGS = -O3 -Wall -Wextra -Wconversion -Wshadow -Isrc
+CC      ?= gcc
+LDFLAGS ?= -lm
 
 SRCDIR  = src
-OBJDIR  = obj
 BINDIR  = bin
 
-# OS detection via environment variable
-ifdef OS
-  DETECTED_OS := Windows
-  GMP_INC ?= C:/Strawberry/c/include
-  GMP_LIB ?= C:/Strawberry/c/lib
-  CFLAGS += -I$(GMP_INC)
-  LDFLAGS_GMP = -L$(GMP_LIB) -lgmp -lm
-  LDFLAGS_STD = -lm
-  EXE = .exe
+# Detect compiler type dynamically
+IS_CLANG := $(shell $(CC) --version 2>/dev/null | grep -i -q "clang" && echo "yes" || echo "no")
+
+ifeq ($(IS_CLANG),yes)
+  LOOP_FLAGS :=
 else
-  UNAME_S := $(shell uname -s 2>/dev/null || echo Unknown)
-  ifeq ($(UNAME_S),Linux)
-    DETECTED_OS := Linux
-    LDFLAGS_GMP = $(shell pkg-config --libs gmp 2>/dev/null || echo -lgmp) -lm
-    LDFLAGS_STD = -lm
-    EXE =
+  LOOP_FLAGS := -fno-peel-loops -fno-unswitch-loops
+endif
+
+CFLAGS  ?= -O3 -Wall -Wextra -Wconversion -Wshadow -Werror \
+	  -fno-strict-aliasing $(LOOP_FLAGS) -Isrc
+
+UNAME_S := $(shell uname -s 2>/dev/null || echo "Windows")
+
+# Set executable extension
+ifneq (,$(filter %MINGW %MSYS %Windows,$(UNAME_S)))
+  EXE := .exe
+else
+  EXE :=
+endif
+
+# Set OpenMP flags based on platform and compiler
+ifeq ($(UNAME_S),Darwin)
+  ifeq ($(IS_CLANG),yes)
+    OPENMP := -Xpreprocessor -fopenmp
+    LDFLAGS += -lomp
+  else
+    OPENMP := -fopenmp
   endif
-  ifeq ($(UNAME_S),Darwin)
-    DETECTED_OS := macOS
-    GMP_INC ?= /opt/homebrew/include
-    GMP_LIB ?= /opt/homebrew/lib
-    CFLAGS += -I$(GMP_INC)
-    LDFLAGS_GMP = -L$(GMP_LIB) -lgmp -lm
-    LDFLAGS_STD = -lm
-    EXE =
-  endif
-  ifneq ($(UNAME_S),Linux)
-    ifneq ($(UNAME_S),Darwin)
-      DETECTED_OS := Unix
-      LDFLAGS_GMP = -lgmp -lm
-      LDFLAGS_STD = -lm
-      EXE =
-    endif
+else
+  ifeq ($(IS_CLANG),yes)
+    OPENMP := -fopenmp=libgomp
+  else
+    OPENMP := -fopenmp
   endif
 endif
 
-# Paper Appendix A: Core verification programs (12 standard + 1 GMP)
-TARGETS_STD = \
-	derive_k \
-	derive_k2 \
-	trace_verify \
-	weyl_law_verify \
-	heat_kernel_expansion \
-	tauberian_argument \
-	trace_error_bound \
-	prove_epsilon_zero_closure \
-	test_epsilon_paths \
-	test_fejer_prime_sum \
-	prove_path_a_determinant \
-	prove_path_b_gaussian
+CFLAGS += $(OPENMP)
 
-TARGETS_GMP = derive_k_gmp
+# Lemma I: Gram Jacobi construction, Weyl law, Sturm oscillation
+PROOF_LEMMA_I = deboor_golub weyl_law_verify phase_shooting stronger_conditions
 
-ALL_TARGETS = $(TARGETS_STD) $(TARGETS_GMP)
+# Lemma II: Correction formula
+PROOF_LEMMA_II = derive_k derive_k2 derive_k_gmp
 
-# Default: build all programs
-all: dirs std gmp
-	@echo ""
-	@echo "Built $(words $(ALL_TARGETS)) programs in $(BINDIR)/"
-	@echo "  Standard: $(words $(TARGETS_STD))"
-	@echo "  GMP:      $(words $(TARGETS_GMP))"
+# Theorem I: Central convergence, trace formula
+PROOF_THEOREM_I = trace_verify trace_error_bound heat_kernel_expansion
 
-dirs:
-ifdef OS
-	@-mkdir $(OBJDIR) 2>nul
-	@-mkdir $(BINDIR) 2>nul
-else
-	@mkdir -p $(OBJDIR)
+# Theorem II: Spectral shift convergence, Birman-Krein + Guinand-Weil
+PROOF_THEOREM_II = spectral_shift predict sincos_n25 krein_ssf_enhanced
+
+# Theorem III: Spectral determinant identity
+PROOF_THEOREM_III = det2_vs_xi det_uniform_bound det2_uniform_bound \
+	hadamard_vs_analytic hadamard_extrapolation hadamard_10k \
+	hadamard_terminal xi_hadamard_vs_mpmath spectral_rigidity
+
+# Path A/B/C: Birman-Krein, Gaussian-Weil, epsilon closure
+PROOF_PATHS = prove_path_a_determinant prove_path_b_gaussian prove_epsilon_zero_closure
+
+# Level 3 barrier closure
+PROOF_LEVEL3 = resolvent_trace
+
+# Gap closures: P0 (alpha outliers), P1-3 (Gram!=zeros), k(p), L8
+PROOF_GAPS = classify_primes gauge_invariance kp_verify derive_kp l8_verify \
+	stationary_phase_test
+
+# Infrastructure and verification
+PROOF_INFRA = isospectral_flow phase234 trace_class \
+	spectral_cauchy unnormalized_cauchy \
+	mfunction_bridge m_function m_zeta_bridge rescaled_operator \
+	spectral_chain spectral_chain_extended riemann_siegel_zeta \
+	jacobian_analysis block_jacobi \
+	analytic_detrend analytic_entry_formula det_xi_match \
+	wkb_resolvent
+
+PROOF_CORE = $(PROOF_LEMMA_I) $(PROOF_LEMMA_II) \
+	$(PROOF_THEOREM_I) $(PROOF_THEOREM_II) $(PROOF_THEOREM_III) \
+	$(PROOF_PATHS) $(PROOF_LEVEL3) $(PROOF_GAPS) $(PROOF_INFRA)
+
+BINS = $(foreach p,$(PROOF_CORE),$(BINDIR)/$p$(EXE))
+
+all: $(BINDIR) $(BINS)
+
+$(BINDIR):
 	@mkdir -p $(BINDIR)
-endif
 
-# Standard programs (no GMP)
-std: dirs
-	@echo "Building standard programs ($(words $(TARGETS_STD)))..."
-	@for prog in $(TARGETS_STD); do \
-		echo "  $$prog"; \
-		$(CC) $(CFLAGS) $(SRCDIR)/$$prog.c -o $(BINDIR)/$$prog$(EXE) $(LDFLAGS_STD); \
-	done
+$(BINDIR)/%$(EXE): $(SRCDIR)/%.c | $(BINDIR)
+	@echo "  $*"
+	@$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
 
-# GMP programs
-gmp: dirs
-	@echo "Building GMP-dependent programs ($(words $(TARGETS_GMP)))..."
-	@for prog in $(TARGETS_GMP); do \
-		echo "  $$prog"; \
-		$(CC) $(CFLAGS) $(SRCDIR)/$$prog.c -o $(BINDIR)/$$prog$(EXE) $(LDFLAGS_GMP); \
-	done
-
-# Run verification suite
 test: all
-	@echo "Running verification suite..."
-	@for prog in $(TARGETS_STD); do \
-		echo ""; \
+	@for prog in $(PROOF_CORE); do \
 		echo "=== $$prog ==="; \
-		$(BINDIR)/$$prog$(EXE) 2>&1 | head -20; \
+		$(BINDIR)/$$prog$(EXE) 2>&1 | head -15; \
+		echo ""; \
 	done
 
-# Convenience targets
-derive_k: dirs
-	$(CC) $(CFLAGS) $(SRCDIR)/derive_k.c -o $(BINDIR)/derive_k$(EXE) $(LDFLAGS_STD)
-
-derive_k2: dirs
-	$(CC) $(CFLAGS) $(SRCDIR)/derive_k2.c -o $(BINDIR)/derive_k2$(EXE) $(LDFLAGS_STD)
-
-trace: dirs
-	$(CC) $(CFLAGS) $(SRCDIR)/trace_verify.c -o $(BINDIR)/trace_verify$(EXE) $(LDFLAGS_STD)
-
-weyl: dirs
-	$(CC) $(CFLAGS) $(SRCDIR)/weyl_law_verify.c -o $(BINDIR)/weyl_law_verify$(EXE) $(LDFLAGS_STD)
-
-# Clean
 clean:
-ifdef OS
-	@-del /q $(OBJDIR)\*.o 2>nul
-	@-del /q $(BINDIR)\*$(EXE) 2>nul
-else
-	@rm -f $(OBJDIR)/*.o $(BINDIR)/*$(EXE) 2>/dev/null || true
-endif
-	@echo "Cleaned."
+	rm -rf $(BINDIR)
 
-distclean:
-ifdef OS
-	@-rd /s /q $(OBJDIR) 2>nul
-	@-rd /s /q $(BINDIR) 2>nul
-else
-	@rm -rf $(OBJDIR) $(BINDIR)
-endif
-	@echo "Removed $(OBJDIR)/ and $(BINDIR)/."
-
-# Info
-info:
-	@echo "RH Proof Build System (Paper Appendix A)"
-	@echo "========================================="
-	@echo "OS:              $(DETECTED_OS)"
-	@echo "Compiler:        $(CC)"
-	@echo "CFLAGS:          $(CFLAGS)"
-	@echo "GMP Link:        $(LDFLAGS_GMP)"
-	@echo ""
-	@echo "Programs: $(words $(ALL_TARGETS)) total"
-	@echo "  Standard: $(TARGETS_STD)"
-	@echo "  GMP:      $(TARGETS_GMP)"
-
-.PHONY: all dirs std gmp test clean distclean info derive_k derive_k2 trace weyl
+.PHONY: all test clean

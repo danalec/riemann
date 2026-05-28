@@ -97,6 +97,7 @@ Desktop.ini
 .qwen/
 *.sublime-project
 *.sublime-workspace
+QWEN.md
 
 # ===========================================
 # Miscellaneous

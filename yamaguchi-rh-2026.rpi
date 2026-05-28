@@ -1,0 +1,16 @@
+%authors=Dan Alec Yamaguchi\kern 0.2ex\href  {https://orcid.org/0009-0002-9725-7779}{\includecolorgraphics [height=2ex]{aom_orcid_logo}{aom_orcid_logo_bw}}
+%authors.information={author=Dan Alec Yamaguchi;fulladdress=Independent Researcher;email=danalec@gmail.com;orcid=0009-0002-9725-7779;}
+%title=Spectral Determinant of a Cutoff-Regularized Hamiltonian and the Riemann Zeta Function\\[0.1em]\small  \textit  {PREPRINT — v3}\\[0.05em]\Small  DOI: \href  {https://doi.org/10.5281/zenodo.20357668}{10.5281/zenodo.20357668}
+%year=XXXX
+%volume=00
+%issue=0
+%paper=
+%startpage=1
+%endpage=73
+%doi=10.5281/zenodo.20357668
+%subjects=Primary 11M26; Secondary: 47A10, 81Q10
+%keywords=Riemann Hypothesis, Hilbert--P\'olya conjecture, Berry--Keating operator, self-adjoint operator, theta quantisation
+%abstract=<begin abstract english> We construct a finite-dimensional Hermitian Jacobi matrix $J_N$ whose eigenvalues approximate the non-trivial zeros of $\zeta (s)$, prove its Weyl law, and derive an analytic diagonal correction (RMS $0.0090$). A Paley--Legendre perturbation injects the prime spectrum unconditionally via the Guinand--Weil explicit formula; archimedean matching is established by the exact $\theta '/\Gamma '/\Gamma $ identity. The Birman--Krein spectral shift, Riemann--von\nonbreakingspace Mangoldt integration by parts, and Guinand--Weil formula yield the trace formula $\operatorname  {Tr}h(J_\infty ) = \DOTSB \sum@ \slimits@ _k h(\gamma _k)$ for all Schwartz $h$. Hadamard rigidity (evenness + ratio convergence) gives $\lambda _k = \gamma _k$; the paired spectral determinant $D_N(z) = \DOTSB \prod@ \slimits@ _k(1 - z^2/\lambda _k^2)$ satisfies $D_N(z)/\xi (\tfrac  12+iz) \to c$, from which self-adjointness of $J_\infty $ forces all zeros onto $\Re (s)=\tfrac  12$, proving RH unconditionally. Computations confirm every stage: $D_N$ evenness to machine precision, $D_N/\xi \to c \approx 1.96$ (Hadamard rigidity), Hadamard product verified at $10{,}000$ zeros (mpmath, 18-digit), Carleman condition $\DOTSB \sum@ \slimits@ _{k=0}^{N-1} 1/b_k \to \infty $ (partial sums $\sim 0.4\sqrt  {N}$), prime-power hierarchy $A_m = A_1^m/m$ for all $p \le 47$, spectral shift DFT detects all $25$ primes $p \le 97$, de\nonbreakingspace Boor--Golub inverse reconstruction (forward check $< 10^{-13}$), and a contradiction machine falsifying $80/80$ perturbations ($\text  {SNR} > 2.6 \times 10^9$). <end abstract english>
+%articlelanguage=english
+%paperUrl=
+%grants=

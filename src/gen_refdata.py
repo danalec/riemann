@@ -1,3 +1,11 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (C) 2026 Dan Alec Yamaguchi
+#
+# Licensed under GNU Affero General Public License v3.0.
+# Commercial licenses available for enterprise use.
+# Contact: danalec@gmail.com
+# See LICENSE-COMMERCIAL for details.
+#
 """Generate refdata header with N zeta zeros and S(T) values via mpmath."""
 import mpmath as mp
 import sys, os
